@@ -10,7 +10,9 @@ email: piddnad@gmail.com
 
 # Build settings
 markdown: kramdown
-gems: [jekyll-paginate]
+# gems: [jekyll-paginate]
+plugins:
+  - jekyll-paginate
 highlighter: rouge
 kramdown:
   input: GFM
