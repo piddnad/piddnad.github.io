@@ -9,17 +9,20 @@ beian: # "备案号"
 email: piddnad@gmail.com
 
 # Build settings
-markdown: kramdown
+permalink: /:year/:month/:day/:title/
+exclude: ["README.md", "changelog.md"]
 # gems: [jekyll-paginate]
 plugins:
   - jekyll-paginate
+
+markdown: kramdown  
 highlighter: rouge
 kramdown:
   input: GFM
 
 # Pageinate settings
 paginate: 10 # 分页大小
-paginate_path: ":num"
+paginate_path: "page/:num/"
 
 # Search settings
 baidu_search: true
