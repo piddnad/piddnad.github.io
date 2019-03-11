@@ -1,7 +1,7 @@
 ---
 layout: page
-title: Tag
-permalink: /tag
+title: 标签
+permalink: /tag/
 ---
 
 <script>
