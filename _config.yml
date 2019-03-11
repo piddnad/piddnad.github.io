@@ -3,7 +3,7 @@ title: Cybertron Iacon
 subtitle: Autobots, transform and roll out!
 description: I wanna be the challenger.
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://piddnad.github.io" # 你的域名
+url: "https://www.piddnad.cn" # 你的域名
 page_no_title: "Piddnad's Blog" # 文章无标题时默认显示内容
 beian: # "备案号"
 email: piddnad@gmail.com
