@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="zh-CN" >
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta content="yes" name="apple-mobile-web-app-capable">
+  <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style">
+  <meta content="telephone=no" name="format-detection">
+  
+  <title>标签 | Autobots, transform and roll out!</title>
+  
+  <meta name="keywords" content="">
+  <meta name="description" content="I wanna be the challenger.">
+  
+  
+  <link rel="Shortcut Icon" type="image/x-icon" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/favicon.png">
+  <link rel="apple-touch-icon-precomposed" href="/favicon.png">
+  <link rel="alternate" type="application/rss+xml" title="Cybertron Iacon" href="/feed.xml">
+  
+  <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="/css/pure-min.css">
+  <link rel="stylesheet" type="text/css" href="/css/grids-responsive-min.css">
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+
+  <!--use mathJax to edit formulas in LaTex grammar.-->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+          inlineMath: [['$','$']]
+        }
+      });
+  </script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+
+</head>
+
+  <body>
+    <div class="body_container">
+      <div id="header">
+        <div class="site-name">
+          <h1 class="hidden">标签</h1>
+          <a id="logo" href="/.">Cybertron Iacon</a>
+          <p class="description">Autobots, transform and roll out!</p>
+        </div>
+        <div id="nav-menu">
+          
+            <a href="/."><i class="icon-home"> 首页</i></a>
+          
+            <a href="/archives/"><i class="icon-archive"> 归档</i></a>
+          
+            <a href="/about/"><i class="icon-about"> 关于</i></a>
+          
+            <a href="/history/"><i class="icon-history"> 历史</i></a>
+          
+        </div>
+      <script type="text/javascript">
+      var menus=document.getElementById('nav-menu');
+      var ishome = true;
+      for (var i=1;i<menus.childElementCount;i++) {
+        var path = location.href;
+        var current = path.startsWith(menus.children[i].href);
+        if (current) {
+          menus.children[i].className ='current';
+          ishome = false;
+          break;
+        }
+      }
+      if (ishome) {
+      	menus.children[0].className ='current';
+      }
+      </script>
+      </div>
+
+      <div id="layout" class="pure-g">
+        <div class="pure-u-1 pure-u-md-3-4">
+          <div class="content_container">
+            <script>
+  var key = location.pathname;
+  key = key.substring('/tag/'.length);
+  if (key.indexOf('/') != -1) {
+    key = '';
+  }
+</script>
+
+<p>正在查看 “<script>document.write(key);</script>” 下的文章</p>
+
+<div class="post">
+  <div class="post-archive">
+  
+    <!-- <h2>2019</h2> -->
+    <ul class="listing" style="display: none;">
+      <li>
+      <span class="date">2019/03/04</span>
+      <a href="/2019/03/04/S3FD_Paper_Reading/" key="DeepLearningFaceDetectionPaper">
+      
+  		论文阅读：S3FD: Single Shot Scale-invariant Face Detector
+  	  
+  	  </a>
+  	</li>
+    </ul>
+  
+    <!-- <h2>2019</h2> -->
+    <ul class="listing" style="display: none;">
+      <li>
+      <span class="date">2019/02/10</span>
+      <a href="/2019/02/10/End_to_end_people_detection_in_crowded_scenes/" key="PaperDeepLearningObjectDetection">
+      
+  		论文阅读：End-to-end people detection in crowded scenes
+  	  
+  	  </a>
+  	</li>
+    </ul>
+  
+    <!-- <h2>2019</h2> -->
+    <ul class="listing" style="display: none;">
+      <li>
+      <span class="date">2019/01/17</span>
+      <a href="/2019/01/17/Building_Personal_Blog_on_VPS/" key="TutorialLinux">
+      
+  		VPS 搭建个人博客傻瓜教程
+  	  
+  	  </a>
+  	</li>
+    </ul>
+  
+    <!-- <h2>2019</h2> -->
+    <ul class="listing" style="display: none;">
+      <li>
+      <span class="date">2019/01/06</span>
+      <a href="/2019/01/06/Best_Way_to_Link_Macbook_with_Monitor/" key="TutorialAppleDell">
+      
+  		MacBook Pro 外接2K显示屏的最佳显示方案
+  	  
+  	  </a>
+  	</li>
+    </ul>
+  
+    <!-- <h2>2018</h2> -->
+    <ul class="listing" style="display: none;">
+      <li>
+      <span class="date">2018/12/17</span>
+      <a href="/2018/12/17/Deep_Learning_and_Patients_Classification/" key="DeepLearningBiologyPaper">
+      
+  		论文阅读：深度学习和病人分类
+  	  
+  	  </a>
+  	</li>
+    </ul>
+  
+    <!-- <h2>2018</h2> -->
+    <ul class="listing" style="display: none;">
+      <li>
+      <span class="date">2018/08/19</span>
+      <a href="/2018/08/19/Installing_Caffe_on_MacOS_10.14/" key="TutorialCaffeAppleDeepLearning">
+      
+  		macOS10.14 + Anaconda3 + Python 3.7 安装Caffe框架
+  	  
+  	  </a>
+  	</li>
+    </ul>
+  
+  </div>
+</div>
+
+<script>
+  window.onload=function() {
+    var items = $('.post-archive a');
+    for (var i=0; i<items.length; i++) {
+      var item = items[i];
+      if ($(item).attr('key').toLowerCase().indexOf(key.toLowerCase()) == -1) {
+        $(item.parentElement.parentElement).remove();
+      } else {
+        $(item.parentElement.parentElement).show();
+      }
+    }
+    if ($('.post-archive a').length == 0) {
+      $('.post-archive').html('<font color="red">没有记录</font>')
+    }
+  }
+</script>
+
+
+
+          </div>
+        </div>
+        
+        <div class="pure-u-1-4">
+          <div id="sidebar">
+            <div class="widget">
+              
+                <form action="//www.baidu.com/s?gpc=stf" method="get" accept-charset="utf-8" target="_blank" class="search-form">
+                  <input type="text" name="q1" maxlength="20" placeholder="Search" class="search-form-input">
+                  <input type="hidden" name="q6" value="http://localhost:4000">
+                </form>
+              
+              
+            </div>
+            
+
+            <div class="widget">
+                <div class="widget-title">心情记录</div><ul></ul>
+                    只留一盏灯<br>
+                    光影似流沙昏黄<br>
+                    在指尖流淌<br>
+                    余波荡漾<br>
+                              ——「九月清晨」
+            </div>
+
+
+            <div class="widget">
+                <div class="widget-title">文章分类</div>
+                <ul class="category-list">
+                  
+                    <li class="category-list-item">
+                      <a class="category-list-link" href="/category/#教程">教程 (4)</a>
+                    </li>
+                  
+                    <li class="category-list-item">
+                      <a class="category-list-link" href="/category/#论文">论文 (2)</a>
+                    </li>
+                  
+                </ul>
+            </div>
+
+
+            <div class="widget">
+                <div class="widget-title">标签</div>
+                <div class="tagcloud">
+                  
+                    <a href="/tag/Tutorial" style="font-size: 15px;">Tutorial</a>
+                  
+                    <a href="/tag/Caffe" style="font-size: 15px;">Caffe</a>
+                  
+                    <a href="/tag/Apple" style="font-size: 15px;">Apple</a>
+                  
+                    <a href="/tag/DeepLearning" style="font-size: 15px;">DeepLearning</a>
+                  
+                    <a href="/tag/Biology" style="font-size: 15px;">Biology</a>
+                  
+                    <a href="/tag/Paper" style="font-size: 15px;">Paper</a>
+                  
+                    <a href="/tag/Dell" style="font-size: 15px;">Dell</a>
+                  
+                    <a href="/tag/Linux" style="font-size: 15px;">Linux</a>
+                  
+                    <a href="/tag/ObjectDetection" style="font-size: 15px;">ObjectDetection</a>
+                  
+                    <a href="/tag/FaceDetection" style="font-size: 15px;">FaceDetection</a>
+                  
+                </div>
+            </div>
+              
+
+            <div class="widget">
+              <div class="widget-title">友情链接</div>
+              
+                <a href="/"><i class=""> </i></a>
+                <ul></ul><a href="https://www.simonyy.com/" title="Simon's Blog" target="_blank">Simon's Blog</a>
+              
+            </div>
+
+
+            <!-- <div class="widget hide">
+                <div class="widget-title">相关推荐</div>
+                <ul class="post-list">
+                
+                </ul>
+            </div> -->
+
+            
+            <div class="widget post-toc hide">
+                <div class="widget-title">文章目录</div>
+            </div>
+            <script type="text/javascript">
+            function TOCize(toc, content, matchHeightTo) {
+                if (!(toc && content && matchHeightTo)) return false
+            
+                var cnt = 0;
+            
+                var make = function(tag) {
+                    return document.createElement(tag)
+                }
+            
+                var aniscroll = {
+                    to: function(top) {
+                        aniscroll.target = top;
+                        if (aniscroll.running) return;
+                        aniscroll.running = setInterval(aniscroll.tick, 20);
+                    },
+                    target: 0,
+                    running: 0,
+                    getTop: function() {
+                        return window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
+                    },
+                    setTop: function(value) {
+                        (window['scrollTo'] && window.scrollTo(window.scrollX, value))
+                    },
+                    tick: function() {
+                        var oldST = aniscroll.getTop(), newST = ~~((oldST + aniscroll.target) / 2);
+                        aniscroll.setTop(newST);
+                        if (aniscroll.getTop() < newST || Math.abs(newST - aniscroll.target) < 10) {
+                            aniscroll.setTop(aniscroll.target);
+                            clearInterval(aniscroll.running)
+                            aniscroll.running = 0
+                        }
+                    }
+                }
+            
+                function scrollToHeader(header, hash, ev) {
+                    var y = header.getBoundingClientRect().top + aniscroll.getTop();
+                    if (window.history['pushState']) {
+                        window.history.pushState({}, header.textContent, "#" + hash);
+                        aniscroll.to(y);
+                        ev.preventDefault();
+                    } else {
+                        var y2 = aniscroll.getTop();
+                        setTimeout(function() {
+                            aniscroll.setTop(y2);
+                            aniscroll.to(y);
+                        }, 0);
+                    }
+                }
+            
+                var generateLink = function(h) {
+                    var q = make('a');
+                    cnt++;
+                    var hash = h.getAttribute('id');
+                    if (!hash) {
+                        hash = ('generated-hash-' + cnt);
+                        h.setAttribute('id', hash);
+                    }
+                    q.textContent = h.textContent;
+                    q.setAttribute('href', '#' + hash );
+                    q.addEventListener('click', scrollToHeader.bind(this, h, hash), false);
+                    return q;
+                };
+            
+                var hs = content.querySelectorAll('h1, h2, h3, h4, h5, h6');
+                var cul = null, plevel = 1;
+                var uls = [make('ul')];
+                for (var i=0;i<hs.length;i++) {
+                    var level = +hs[i].tagName.substr(1);
+                    var hi = hs[i];
+                    var ti = make('li');
+                    ti.appendChild(generateLink(hi));
+                    if (plevel < level) {
+                        do {
+                            uls.push(make('ul'));
+                            uls[uls.length-2].appendChild(uls[uls.length-1]);
+                        } while (++plevel < level);
+                    } else if (plevel > level) {
+                        do {
+                            cul = uls.pop();
+                        } while (--plevel > level);
+                    }
+                    cul = uls[uls.length-1];
+                    cul.appendChild(ti);
+                }
+                while(true) {
+                    var chs = uls[0].children;
+                    if (chs.length == 1 && chs[0].tagName == 'UL')
+                        uls.shift();
+                    else
+                        break;
+                }
+            
+                if (!cnt) return false;
+            
+                var scrolldummy=make('div');
+                toc.appendChild(scrolldummy);
+                toc.appendChild(uls[0]);
+                toc.style.display = 'block';
+            
+                var maxHeightTOC = '';
+                var ppc = document.querySelector('.post');
+                var s1 = function(){
+                    var scrollTop=aniscroll.getTop(), dummyClientTop=scrolldummy.getBoundingClientRect().top,
+                        margin = 10,c,d; // c = dummyHeight, d = TOC.maxHeight (+'px')
+                    if ((c = -dummyClientTop + margin) < 0) c = 0;
+                    if (c) {
+                        var wh = window.innerHeight
+                            || document.documentElement.clientHeight
+                            || document.body.clientHeight,
+                        cbox = matchHeightTo.getBoundingClientRect(),
+                        vq = cbox.bottom - dummyClientTop - uls[0].offsetHeight;
+                        if (c>vq) c=vq;
+                        d = (wh - (margin<<1)) + 'px';
+                    } else {
+                        d = "";
+                    }
+                    if (d != maxHeightTOC) { //status lock.
+                        maxHeightTOC = d;
+                        if (d) {
+                            uls[0].setAttribute('style', 'max-height:' + d + '; width:' + (toc.offsetWidth-20) + "px" );
+                        } else {
+                            uls[0].setAttribute("style","");
+                        }
+                    }
+                    scrolldummy.style.height = (c+'px');
+                };
+                window.addEventListener('scroll', s1, false);
+                window.addEventListener('resize', s1, false);
+            }
+            
+            TOCize(
+                document.querySelector('.post-toc'),
+                document.querySelector('.post-content'),
+                document.querySelector('.post')
+            );
+            </script>
+
+          </div>
+        </div>
+      </div>
+      
+      <div id="footer">
+        Copyright &copy; <span id="cur_year"></span> <a href="https://www.piddnad.cn/">Piddnad</a> - All Rights
+        Reserved.
+        Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a>
+        <script type="text/javascript">var cur_date = new Date();
+        document.getElementById("cur_year").innerHTML = cur_date.getFullYear();</script>
+        
+      </div>
+      
+
+      <a id="rocket" href="#top" class="show"></a>
+      
+      <script src="/js/jquery.min.js" type="text/javascript"></script>
+      <script src="/js/totop.js" type="text/javascript"></script>
+      <script src="/js/fancybox.pack.js" type="text/javascript"></script>
+      <script src="/js/jquery.fancybox.js" type="text/javascript"></script>
+      <!-- <link rel="stylesheet" href="/css/jquery.fancybox.css" type="text/css"> -->
+      
+    </div>
+
+    
+
+  </body>
+
+</html>
