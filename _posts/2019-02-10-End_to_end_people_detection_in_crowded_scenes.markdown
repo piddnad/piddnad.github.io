@@ -2,7 +2,7 @@
 layout: post
 title:  "论文阅读：End-to-end people detection in crowded scenes"
 date:   2019-02-10
-categories: 教程
+categories: [教程]
 tags: [Paper, DeepLearning, ObjectDetection]
 ---
 

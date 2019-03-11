@@ -2,7 +2,7 @@
 layout: post
 title:  "macOS10.14 + Anaconda3 + Python 3.7 安装Caffe框架"
 date:   2018-08-19
-categories: 教程
+categories: [教程]
 tags: [Tutorial, Caffe, Apple, DeepLearning]
 ---
 

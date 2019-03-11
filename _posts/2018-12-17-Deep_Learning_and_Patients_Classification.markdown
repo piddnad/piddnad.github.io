@@ -2,7 +2,7 @@
 layout: post
 title:  "论文阅读：深度学习和病人分类"
 date:   2018-12-17
-categories: 论文
+categories: [论文]
 tags: [DeepLearning, Biology, Paper]
 ---
 

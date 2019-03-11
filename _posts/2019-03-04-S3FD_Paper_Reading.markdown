@@ -2,7 +2,7 @@
 layout: post
 title:  "论文阅读：S3FD: Single Shot Scale-invariant Face Detector"
 date:   2019-03-04
-categories: 论文
+categories: [论文]
 tags: [DeepLearning, FaceDetection, Paper]
 ---
 
