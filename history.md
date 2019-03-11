@@ -1,7 +1,8 @@
 ---
 layout: page
-title: History
+title: 历史
 permalink: /history/
 ---
 
-施工中。。。
+
+👷施工中。。。

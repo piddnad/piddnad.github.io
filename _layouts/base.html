@@ -113,7 +113,7 @@
                 </ul>
             </div>
 
-
+<!-- 
             <div class="widget">
                 <div class="widget-title">标签</div>
                 <div class="tagcloud">
@@ -121,7 +121,7 @@
                     <a href="{{ site.baseurl }}/tag/{{ tag[0] }}" style="font-size: 15px;">{{ tag[0] }}</a>
                   {% endfor %}
                 </div>
-            </div>
+            </div> -->
               
 
             <div class="widget">
@@ -133,15 +133,17 @@
             </div>
 
 
-            <!-- <div class="widget hide">
+            {% if site.related_posts %}
+            <div class="widget">
                 <div class="widget-title">相关推荐</div>
-                <ul class="post-list">
+                <ul class="post-list">  
                 {% for post in site.related_posts %}
                   <li class="post-list-item"><a class="post-list-link" href="{{ post.url | prepend: site.baseurl }}">{% if post.title %} {{ post.title }} {% else %} {{ site.page_no_title }} {% endif %}</a></li>
                 {% endfor %}
                 </ul>
-            </div> -->
-
+            </div>
+            {% endif %}
+   
             
             <div class="widget post-toc hide">
                 <div class="widget-title">文章目录</div>

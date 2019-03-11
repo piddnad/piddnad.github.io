@@ -1,8 +1,10 @@
 ---
 layout: page
-title: About
+title: 关于
 permalink: /about/
 ---
+
+![](https://ws1.sinaimg.cn/large/006tKfTcly1g0yn92gdcpj31800u0jvs.jpg){:width="500px"}
 
 Piddnad ，学生，就读于计算机系。
 

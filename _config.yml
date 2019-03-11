@@ -36,12 +36,15 @@ menu:
   - page: 归档
     directory: archives/
     icon: icon-archive
+  - page: 标签
+    directory: tags/
+    icon: icon-history
   - page: 关于
     directory: about/
     icon: icon-about
-  - page: 历史
-    directory: history/
-    icon: icon-history
+  # - page: 历史
+  #   directory: history/
+  #   icon: icon-history
   # - page: 订阅
   #   directory: feed.xml
   #   icon: icon-rss

@@ -1048,3 +1048,33 @@ code {
   white-space: nowrap;
   border-radius: 3px;
 }
+
+
+#label_box {
+  line-height: 2.4em;
+  /* margin-bottom: 4em; */
+}
+
+#label_box li {
+  background-image: none;
+  list-style: none;
+  list-style-image: none;
+  display: inline-block
+}
+
+#label_box a {
+  padding: 4px 3px;
+  background: #dfdfdf;
+  color: #555;
+  border-radius: 3px;
+  text-decoration: none;
+}
+
+#label_box a span {
+  vertical-align: super;
+  font-size: .8em
+}
+
+#label_box a:hover {
+  background-color: #BFBFBF
+}
