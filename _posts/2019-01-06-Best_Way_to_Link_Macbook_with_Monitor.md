@@ -8,7 +8,7 @@ tags: [Tutorial, Apple, Dell]
 
 最近，考虑为我的 MacBook Pro 购入一款外接显示器。
 
-在调研和参考了各种排名和评测后，我最终选择了 Dell 的一款带翻转屏、高色域（99% sRGB）、出厂校色的 2K 显示器——P2418D。（此处推荐一个 App：*盖得排行*，一个非常好用的购物参考 App，以排行榜的形式呈现各行业领域的权威排名）
+在调研和参考了各种排名和评测后，我最终选择了 Dell 的一款带翻转屏、高色域（99% sRGB）、出厂校色的 2K 显示器——P2418D。（此处推荐一个 App：[盖得排行](https://www.guiderank.org/)，一个非常好用的购物参考 App，以排行榜的形式呈现各行业领域的权威排名）
 
 > **关于 Dell 显示器的小科普**
 >
@@ -93,11 +93,9 @@ sudo cp ~/Downloads/DisplayProductID-xxxx.plist /System/Library/Displays/Content
 ### Step 5
 重启 Mac，此时已经可以使用自己配置的分辨率了。
 
-此时，还需要安装一个分辨率更改工具，推荐 *RDM*，这是一款开源好用的分辨率调节工具。
+此时，还需要安装一个分辨率更改工具，推荐 [RDM](https://github.com/avibrazil/RDM)，这是一款开源好用的分辨率调节工具。
 
-Github 地址：https://github.com/avibrazil/RDM
-
-![使用RDM更改分辨率](https://ws4.sinaimg.cn/large/006tKfTcly1g0vswndgh0j30im0lmwi3.jpg)
+![使用RDM更改分辨率](https://ws4.sinaimg.cn/large/006tKfTcly1g0vswndgh0j30im0lmwi3.jpg){:width="40%"}
 
 
 享受 HiDPI 带来的愉悦观感吧～

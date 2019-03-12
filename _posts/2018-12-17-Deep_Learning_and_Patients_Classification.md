@@ -3,7 +3,7 @@ layout: post
 title:  "论文阅读：深度学习和病人分类"
 date:   2018-12-17
 categories: [论文]
-tags: [DeepLearning, Biology, Paper]
+tags: [Paper, Deep Learning, Biomedical]
 ---
 
 Paper: [Opportunities and obstacles for deep learning in biology and medicine](https://www.biorxiv.org/content/10.1101/142760v1)

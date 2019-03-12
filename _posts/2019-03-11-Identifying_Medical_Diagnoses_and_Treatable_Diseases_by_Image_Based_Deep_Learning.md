@@ -3,7 +3,7 @@ layout: post
 title:  "论文阅读：Identifying Medical Diagnoses and Treatable Diseases by Image-Based Deep Learning"
 date:   2019-03-11
 categories: [论文]
-tags: [Paper, DeepLearning, Biomedical]
+tags: [Paper, Deep Learning, Biomedical]
 ---
 
 发表在 Cell 2018.2.22

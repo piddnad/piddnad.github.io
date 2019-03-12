@@ -21,7 +21,7 @@ kramdown:
   input: GFM
 
 # Pageinate settings
-paginate: 10 # 分页大小
+paginate: 7 # 分页大小
 paginate_path: "page/:num/"
 
 # Search settings
