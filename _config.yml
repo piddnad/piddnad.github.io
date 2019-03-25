@@ -53,7 +53,19 @@ menu:
 links: # 友情链接
   - title: Simon's Blog
     url: https://www.simonyy.com/
-  # - title: site-name2
-  #   url: http://www.example2.com/
+  - title: Ama2in9
+    url: https://ama2in9.top/
   # - title: site-name3
   #   url: http://www.example3.com/
+
+valine:
+  enable: true
+  app_id:  YjUidFlyYePITR34EyBWUFRG-gzGzoHsz
+  app_key: bTB060geL43WbUhJucnuquBo
+  notify: false # mail notifier , https://github.com/xCss/Valine/wiki
+  verify: false # Verification code
+  visitor: true
+  avatar: retro
+  placeholder: Say something~~
+  guest_info: nick, mail, link
+  pageSize: 10
