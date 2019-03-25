@@ -9,13 +9,29 @@ layout: base
       <time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">
         {{ page.date | date: "%b %-d, %Y" }}
       </time>
-      {% if page.author %} • 
-      <span itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <span itemprop="name">
-          {{ page.author }}
-        </span>
-    </span>{% endif %}
+      {% if page.categories.size > 0 %} |
+      <span class="post-category">
+      <i class="icon-post-category">
+      {% for page_category in page.categories %}
+          <a href="{{ site.baseurl }}/category/#{{ page_category }}">{{ page_category }}</a>
+      {% endfor %}
+      </i>
+      </span> {% endif %} {% if page.tags.size > 0 %} |
+          <span class="post-tag">
+          <i class="icon-post-tag">
+          {% for page_tag in page.tags %}
+              <a href="{{ site.baseurl }}/tags/#{{ page_tag }}">{{ page_tag }}</a>
+          {% endfor %}
+          </i>
+      </span>{% endif %}
 
+
+      <!-- 阅读量统计， id 将作为查询条件 -->
+      <span id={{page.url}} class="leancloud-visitors" data-flag-title={{page.title}}>
+        <span class="post-meta-divider">|</span>
+        <span class="post-meta-item-text">阅读量 </span>
+        <span class="leancloud-visitors-count"></span>
+      </span>
 
 
     </p>
