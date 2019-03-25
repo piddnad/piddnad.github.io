@@ -41,19 +41,6 @@ layout: base
     {{ content }}
   </div>
 
-
-  <div class="post-nav">
-    {% if page.previous %}
-    <a href="{{ page.previous.url | prepend: site.baseurl }}" class="pre"><i class="icon-post-pre"> {{
-        page.previous.title }}</i></a>
-    {% endif %} {% if page.next %}
-    <a href="{{ page.next.url | prepend: site.baseur }}" class="next">{{ page.next.title }} <i
-            class="icon-post-next"></i></a>
-    {% endif %}
-  </div>
-
-
-
   <!--valine comment function-->
   <script src="https://cdnjs.loli.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
