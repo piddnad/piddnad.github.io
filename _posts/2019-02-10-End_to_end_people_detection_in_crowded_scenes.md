@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "论文阅读：End-to-end people detection in crowded scenes"
+title:  "论文阅读：拥挤场景中的端到端人物检测"
 date:   2019-02-10
-categories: [教程]
+categories: [论文]
 tags: [Paper, Deep Learning, Object Detection]
 ---
 

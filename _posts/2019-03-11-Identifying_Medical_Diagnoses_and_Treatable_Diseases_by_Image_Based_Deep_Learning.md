@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "论文阅读：Identifying Medical Diagnoses and Treatable Diseases by Image-Based Deep Learning"
+title:  "论文阅读：基于图像的深度学习识别医学诊断和可治疗疾病"
 date:   2019-03-11
 categories: [论文]
 tags: [Paper, Deep Learning, Biomedical]

@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "VPS 搭建个人博客傻瓜教程"
+title:  "VPS 搭建个人博客之傻瓜教程"
 date:   2019-01-17
 categories: [教程]
 tags: [Tutorial, Blog, Linux]
