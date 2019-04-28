@@ -4,7 +4,7 @@ title: 关于
 permalink: /about/
 ---
 
-![](https://ws1.sinaimg.cn/large/006tKfTcly1g0yn92gdcpj31800u0jvs.jpg){:width="100%"}
+![](../img/about.jpg){:width="100%"}
 
 Piddnad ，学生，就读于计算机系。
 
