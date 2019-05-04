@@ -3,7 +3,7 @@ layout: post
 title:  "macOS10.14 + Anaconda3 + Python 3.7 安装Caffe框架"
 date:   2018-08-19
 categories: [教程]
-tags: [Tutorial, Deep Learning, Caffe, Apple]
+tags: [Tutorial, Deep Learning, Caffe, Mac]
 ---
 
 2019更新：这是一篇踩坑实录，目前建议大家使用 PyTorch 作为深度学习框架。

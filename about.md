@@ -4,7 +4,7 @@ title: 关于
 permalink: /about/
 ---
 
-![](../img/about.jpg){:width="100%"}
+![](/img/about.jpg){:width="100%"}
 
 Piddnad ，学生，就读于计算机系。
 

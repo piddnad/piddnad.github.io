@@ -3,7 +3,7 @@ layout: post
 title:  "MacBook Pro 外接2K显示屏的最佳显示方案"
 date:   2019-01-06
 categories: [教程]
-tags: [Tutorial, Apple, Dell]
+tags: [Tutorial, Mac, Dell]
 ---
 
 最近，考虑为我的 MacBook Pro 购入一款外接显示器。
