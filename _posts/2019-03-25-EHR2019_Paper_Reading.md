@@ -20,13 +20,13 @@ Paper: [Evaluation and accurate diagnoses of pediatric diseases using artificial
 * 首先，使用 NLP 信息提取模型从 EHRs 中自动提取临床数据的概念和特征；
 * 随后，基于上一步得到的特征，使用逻辑回归分类器基于解剖学（器官系统）进行诊断分类。
 
-![](https://ws2.sinaimg.cn/large/006tKfTcly1g1dqlliswoj30xl0u0wgr.jpg){:width="80%"}
+![](/imgs/20190325/1.jpg){:width="80%"}
 
 ### 2.1 NLP 信息提取模型
 * 目的：提取 EHR 原始数据中的关键概念和相关类别，并将其转换为查询-答案对重新格式化的临床数据
 * 数据集：具有 25 年以上临床实践经验的高级主治医师手工标注的共 6183 份 EHR 笔记，3564 张用于训练，2619 张用于验证。
 * NLP框架
-![](https://ws1.sinaimg.cn/large/006tKfTcly1g1dqfb85s9j30qa0kswf1.jpg){:width="80%"}
+![](/imgs/20190325/2.jpg){:width="80%"}
     * 词典构建：由人类医生选择文本中临床相关单词，构建了词汇表
     * 符号化和词嵌入：word2Vec
     * 模式设计：使用基于 attention 的双向 LTSM ，输出“问题-答案”查询对
@@ -35,7 +35,7 @@ Paper: [Evaluation and accurate diagnoses of pediatric diseases using artificial
     * 在体检达到最高召回率（分类变量95.62%，自有文本99.08%），在实验室检测达到最低召回率（分类变量72.26%，自有文本88.26%）；在主诉达到最高精度（分类变量97.66%，自有文本98.71%），实验室检测达到最低精度（分类变量93.78%，自有文本96.67%）。
 
 ### 2.2 分级诊断系统
-![](https://ws3.sinaimg.cn/large/006tKfTcly1g1dqmd2tprj31g80lqjt6.jpg)
+![](/imgs/20190325/3.jpg)
 * 使用逻辑回归分类器
 * 分层诊断：为模仿医生推理，使用基于解剖划分（如器官系统）的框架进行诊断
 * 评估每个患者记录的提取特征，先将疾病划分划分为广泛的器官，之后逐层深入划分成器官子系统或更具体的诊断组

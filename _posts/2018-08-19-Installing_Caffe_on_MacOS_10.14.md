@@ -36,9 +36,9 @@ tags: [Tutorial, Deep Learning, Caffe, Mac]
 打开Terminal，使用 Brew 安装依赖。
 
 ```
-brew install --fresh -vd snappy leveldb gflags glog szip lmdb opencv hdf5 openblas
+$ brew install --fresh -vd snappy leveldb gflags glog szip lmdb opencv hdf5 openblas
 # brew install --build-from-source --with-python --fresh -vd protobuf
-brew install --build-from-source --fresh -vd boost boost-python3
+$ brew install --build-from-source --fresh -vd boost boost-python3
 ```
 
 **关于 protobuf：**
@@ -48,11 +48,11 @@ brew install --build-from-source --fresh -vd boost boost-python3
 所以需要去 Github 上下一个老版本，在 https://github.com/google/protobuf，我下载的是3.5.1。找到自己需要的版本，下载protobuf-3.5.1.zip后解压。
 
 ```
-cd /Users/Piddnad/Downloads/protobuf-3.5.1
-./configure
-make
-make check
-make install
+$ cd /Users/Piddnad/Downloads/protobuf-3.5.1
+$ ./configure
+$ make
+$ make check
+$ make install
 ```
 
 这样就可以安装成功了，在终端 protoc --version 可以检验是否安装成功。
@@ -62,9 +62,9 @@ make install
 先从 Github 克隆 Caffe 源代码。
 
 ```
-git clone https://github.com/BVLC/caffe.git
-cd caffe
-cp Makefile.config.example Makefile.config
+$ git clone https://github.com/BVLC/caffe.git
+$ cd caffe
+$ cp Makefile.config.example Makefile.config
 ```
 
 接下来，编辑编译配置文件 Makefile.config.example，并保存为 Makefile.config。 
@@ -204,12 +204,12 @@ Q ?= @
 随后，在 caffe 目录执行
 
 ```
-make clean
-make all -j8 #（数字表示线程数量，可以根据你的硬件配置增加或减少）
-make test -j8
-make runtest
-make pycaffe
-make pytest
+$ make clean
+$ make all -j8 #（数字表示线程数量，可以根据你的硬件配置增加或减少）
+$ make test -j8
+$ make runtest
+$ make pycaffe
+$ make pytest
 ```
 
 

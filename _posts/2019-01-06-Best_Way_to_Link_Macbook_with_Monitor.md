@@ -22,7 +22,7 @@ JD 的物流还是很令人满意，一天之内就收货了。使用 MacBook Pr
 
 Apple 在 2010 年发布 iPhone 4 时，第一次向世人展示 Retina 屏幕，而且在后续的几年发布的 iPad、MBP、iMac 等一系列产品上都采用了这一技术。当年乔帮主将这种高密度像素的屏幕命名为 Retina，主要是指在正常阅读距离下，人眼无法分辨屏幕上的像素颗粒，使得屏幕显示效果更为细腻平滑。Retina 屏与非 Retina 屏之间显示效果的区别如下图所示。
 
-![WWDC 2010上非r屏与r屏显示效果对比](https://ws3.sinaimg.cn/large/006tKfTcly1g0vsvfsofej30hs0a074m.jpg)
+![WWDC 2010上非r屏与r屏显示效果对比](/imgs/20190106/1.jpg)
 
 Retina 屏幕之所以可以做到细腻平滑，除了苹果产品屏幕的高PPI属性（事实上这也是为什么 iPhone XR 的屏幕被大家诟病那么多，因为 PPI 和竞品对比不占优势，甚至可以说是失去了苹果的优良传统），另一个重要的原因是一种称为 HiDPI 的操作系统渲染方式。
 
@@ -46,7 +46,7 @@ Retina 屏的设备拥有高分辨率却并没有让字体变小，其主要原�
 通过在 Terminal 中输入命令，开启 HiDPI 模式
 
 ```
-sudo defaults write /Library/Preferences/com.apple.windowserver.plist DisplayResolutionEnabled -bool true
+$ sudo defaults write /Library/Preferences/com.apple.windowserver.plist DisplayResolutionEnabled -bool true
 ```
 
 ### Step 2 
@@ -54,7 +54,7 @@ sudo defaults write /Library/Preferences/com.apple.windowserver.plist DisplayRes
 连接上显示器，获取并记录显示器信息
 
 ```
-ioreg -lw0 | grep IODisplayPrefsKey
+$ ioreg -lw0 | grep IODisplayPrefsKey
 ```
 
 使用该命令会输出 MacBook 当前连接的所有显示器，其中 AppleBacklightDisplay 代表内部显示器，AppleDisplay 代表外部监视器。例如，我的输出如下：
@@ -79,23 +79,23 @@ https://comsysto.github.io/Display-Override-PropertyList-File-Parser-and-Generat
 这一步由于需要往系统文件夹写入文件，所以必须先禁用系统完整性保护（System Integrity Protection），步骤如下：
 1. 重启 Mac，启动时按住 Command + R，进入 Recovery 模式。
 2. 当出现 *MacOS Utilities”/“OS X Utilities* 屏幕时，按下屏幕顶部的 *Utilities* 菜单，然后选择 *Terminal*。
-3. 输入命令 `csrutil disable; reboot` 。
+3. 输入命令 `$ csrutil disable; reboot` 。
 
 Mac 自动重启后，在 Terminal 输入如下命令，将 plist 文件拷贝至系统目录。
 注意：命令中的三处 xxxx 需要替换成自己显示器的信息。
 
 ```
-sudo cp ~/Downloads/DisplayProductID-xxxx.plist /System/Library/Displays/Contents/Resources/Overrides/DisplayVendorID-xxxx/DisplayProductID-xxxx
+$ sudo cp ~/Downloads/DisplayProductID-xxxx.plist /System/Library/Displays/Contents/Resources/Overrides/DisplayVendorID-xxxx/DisplayProductID-xxxx
 ```
 
-完成后，建议重新开启系统完整性保护，步骤同上，命令为 `csrutil enable` 。
+完成后，建议重新开启系统完整性保护，步骤同上，命令为 `$ csrutil enable` 。
 
 ### Step 5
 重启 Mac，此时已经可以使用自己配置的分辨率了。
 
 此时，还需要安装一个分辨率更改工具，推荐 [RDM](https://github.com/avibrazil/RDM)，这是一款开源好用的分辨率调节工具。
 
-![使用RDM更改分辨率](https://ws4.sinaimg.cn/large/006tKfTcly1g0vswndgh0j30im0lmwi3.jpg){:width="40%"}
+![使用RDM更改分辨率](/imgs/20190106/2.jpg){:width="40%"}
 
 
 享受 HiDPI 带来的愉悦观感吧～

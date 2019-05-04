@@ -25,7 +25,7 @@ Paper: [End-to-end people detection in crowded scenes](https://www.cv-foundation
     * 但这种直接输出检测的端到端方法优于传统方法：即首先生成一组边界框，再用分类器评价它们，最后对过完备检测集合（an overcomplete set of detections ）执行某种形式的合并或非极大值抑制
     
 * 顺序生成一组检测具有重要的优点，即通过记住先前生成的输出避免对同一对象的多次检测。
-![网络架构](https://ws4.sinaimg.cn/large/006tKfTcly1g0vsxyg0dlj312k0c476z.jpg)
+![网络架构](/imgs/20190210/1.jpg)
     * 为了控制这个生成过程，使用具有 LSTM 单元的 RNN。 
     * 为了产生中间表示，使用来自 GoogLeNet 的图像特征，这些特征作为系统的一部分进一步 微调（ﬁne-tuned）。
     * 因此，我们的架构可以被看作是将图像的中间表示转换成一组预测对象的“解码”过程。 LSTM 可被视为在解码步骤之间传播信息并控制下一个输出的位置的“控制器”。
@@ -89,7 +89,7 @@ Paper: [End-to-end people detection in crowded scenes](https://www.cv-foundation
 
 我们将相应的标准真值边界框集合表示为 $G = \{ b^i \| i = 1, ..., M \}$，并且由模型生成的候选边界框集合为 $C = \{b^j \| j = 1, ..., N\}$。接下来，引入适合于将学习过程引导到期望输出的损失函数。
 
-![](https://ws1.sinaimg.cn/large/006tKfTcly1g0vt0re9hgj30vu0c0q4i.jpg)
+![](/imgs/20190210/2.jpg)
 
 考虑上图的例子，它示意性地显示出了具有四个生成假设的检测器，每个假设由其预测步骤编号，我们以秩（rank）表示。
 
@@ -138,7 +138,7 @@ $ \Delta(b_i, \tilde{b}\_j) = (o\_{ij}, r_j, d_{ij}) $
 ## 3 Implementation details
 
 ### 太长不看版本 by Piddnad
-![网络架构](https://ws4.sinaimg.cn/large/006tKfTcly1g0vsxyg0dlj312k0c476z.jpg)
+![网络架构](/imgs/20190210/1.jpg)
 * 输入是 640*480 图像，使用 GoogLeNet 将图像编码成 1024维 15x20大小 的高层特征
     * 每个特征单元具有大小为139×139的感受野
 * 使用 LSTM 作为控制器，顺序生成检测
@@ -167,7 +167,7 @@ $ \Delta(b_i, \tilde{b}\_j) = (o\_{ij}, r_j, d_{ij}) $
 拼接过程如图4所示。在给定的迭代中，令A表示当前所有已接受的边界框预测的集合。我们处理一个新的区域，评估解码器直到产生停止信号并收集新提出的边界框的集合C。这些新的边界框中的一些可能和先前的预测有重合。为了去除对同一对象的多次预测，我们定义了与2.2节中的具有成对损失项Δ'的二分匹配问题：$A×C→\mathbb{N} × \mathbb{R}$，给定$Δ '(b_i,b_j) = (m_{ij}, d_{ij})$。这里，$m_{ij}$表示两个框是否不相交，并且$d_{ij}$是由框之间的L1距离给出的局部消歧项。如前所述，我们利用匈牙利算法在多项式时间内找到最小成本匹配。我们检查每个匹配对 $(b, \tilde{b})$，并将不与其匹配项 $b$ 重叠的任何候选项 $\tilde{b}$ 添加到接受框的集合。这个过程和非极大值抑制之间的重要区别是（1）来自相同区域的框不会相互抑制，（2）每个框最多可以抑制一个其他框。连带地，这允许对实例生成预测，即使它们在图像中明显重叠。
 
 ## 4 模型效果展示
-![](https://ws4.sinaimg.cn/large/006tKfTcly1g0vt1svilij30u00whqga.jpg)
+![](/imgs/20190210/3.jpg)
 上图将本文的模型和 Faster R-CNN 的检测结果进行比较。
 
 * 第一行是未经过非极大值抑制处理的 Faster R-CNN 输出，可以看到对于同一个目标产生了多个冗余检测框；
