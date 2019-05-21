@@ -11,7 +11,7 @@ tags: [Tutorial, Blog, Linux]
 
 所以，我要首先对攻击我的服务器的黑客献上最崇高的敬意：
 
-![](https://ws2.sinaimg.cn/large/006tKfTcly1g0vt3rhlamj31c00u0e82.jpg)
+![](/imgs/20190117/1.jpg)
 
 ## 1 准备工作
 为了搭建一个完全属于自己的个人博客，你只需要以下 3 样东西：
