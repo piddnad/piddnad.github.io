@@ -249,27 +249,27 @@ class TechnewsSpider(CrawlSpider):
 
 这样，最后爬到了1800多条新闻~
 
-###  通过网易新闻的新闻获取 API 爬取
+### 通过网易新闻的新闻获取 API 爬取（Bingo！）
 
 上面的方法虽然好用，但是手工添加网页列表显得有些笨，不能体现我们的主观能动性。
 
-使用Chrome开发者工具监控网络连接发现，当加载新闻列表是，向`https://temp.163.com/special/00804KVA/cm_yaowen_03.js?callback=data_callback`发起了一次request，如下图。
+使用 Chrome 开发者工具监控网络连接发现，当加载新闻列表时，浏览器向https://temp.163.com/special/00804KVA/cm_yaowen_03.js?callback=data_callback发起了一次 request，如下图。
 
 ![](/imgs/20190710/4.png)
 
-检查Response，发现返回的是新闻列表。
+检查 response，发现返回的是新闻列表。
 
-![](/imgs/20190710/5.png)
+![](/imgs/20190710/5.png){:width="40%"}
 
-因此，上面请求的url应该是网易新闻的新闻获取api，推测url中的cm_yaowen是新闻类别，03指的是第3页。
+因此，上面请求的 url 应该是网易新闻的新闻获取api，推测 url 中的 cm_yaowen 是新闻类别，03 指的是第3页。
 
-基于以上分析，我们可以构造我们自己的请求url格式如下：
+基于以上分析，我们可以构造我们自己的请求 url 格式如下：
 
 http://temp.163.com/special/00804KVA/ + 类别_页 + .js?callback=data_callback
 
-其中，类别为cm_yaowen（要闻）、cm_guonei（国内新闻）、cm_tech（科技）等等。打开特定的url，就可以获取该页所有新闻的url，然后进一步爬取，剩下的工作就很简单了~
+其中，类别为 cm_yaowen（要闻）、cm_guonei（国内新闻）、cm_tech（科技）等等。打开特定的 url，就可以获取该页所有新闻的 url，然后进一步爬取，剩下的工作就很简单了~
 
-Spider定义如下：
+Spider 定义如下：
 
 ```
 # -*- coding: utf-8 -*-
@@ -339,7 +339,7 @@ class NewsxApiSpider(scrapy.Spider):
 
 通过 api 进行爬取不需要手动设置网页列表。可以设置每天定时运行，轻轻松松获得大量数据。
 
-#### 彩蛋
+彩蛋
 
 在一个[知乎回答](<https://www.zhihu.com/question/26992971/answer/93124356>) 提到了网易新闻的[采集页面](http://news.163.com/special/0001220O/news_json.js)，json 中包含了新闻标题、url 等信息。因此可以直接使用这个 json 文件搞点事情。
 
