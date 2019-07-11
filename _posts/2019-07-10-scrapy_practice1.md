@@ -191,7 +191,7 @@ scrapy crawl technews -o news.csv -t csv
 
 我动手尝试了前面两种方式。最后一种方式可以选择使用 Splash 等工具，具体教程可以看[这里](<https://www.cnblogs.com/518894-lu/p/9067208.html#_label2>)。
 
-### 直接爬一个有新闻列表的静态页面
+### 直接爬一个有新闻列表的静态页面（笨办法）
 
 这种方式最简单粗暴，但是不足的地方就是需要去寻找有没有这样的新闻列表页面。所幸，经过探索，我发现网易科技新闻的一些板块里有历史回顾页面，这里的新闻列表是静态页面，可以直接爬取。
 
@@ -251,7 +251,97 @@ class TechnewsSpider(CrawlSpider):
 
 ###  通过网易新闻的新闻获取 API 爬取
 
-在一个[知乎回答](<https://www.zhihu.com/question/26992971/answer/93124356>) get 到了网易新闻的[采集页面](http://news.163.com/special/0001220O/news_json.js)，可以看到 response 的 json 中包含了新闻标题、url 等信息。因此可以直接使用这个 json 文件搞点事情。
+上面的方法虽然好用，但是手工添加网页列表显得有些笨，不能体现我们的主观能动性。
+
+使用Chrome开发者工具监控网络连接发现，当加载新闻列表是，向`https://temp.163.com/special/00804KVA/cm_yaowen_03.js?callback=data_callback`发起了一次request，如下图。
+
+![](/imgs/20190710/4.png)
+
+检查Response，发现返回的是新闻列表。
+
+![](/imgs/20190710/5.png)
+
+因此，上面请求的url应该是网易新闻的新闻获取api，推测url中的cm_yaowen是新闻类别，03指的是第3页。
+
+基于以上分析，我们可以构造我们自己的请求url格式如下：
+
+http://temp.163.com/special/00804KVA/ + 类别_页 + .js?callback=data_callback
+
+其中，类别为cm_yaowen（要闻）、cm_guonei（国内新闻）、cm_tech（科技）等等。打开特定的url，就可以获取该页所有新闻的url，然后进一步爬取，剩下的工作就很简单了~
+
+Spider定义如下：
+
+```
+# -*- coding: utf-8 -*-
+import scrapy
+from scrapy.spiders import CrawlSpider, Rule
+from scrapy.linkextractors import LinkExtractor
+from NewsSpider.items import NewsspiderItem
+import json
+
+
+class NewsxApiSpider(scrapy.Spider):
+    '''
+    通过新闻获取API爬取
+    '''
+
+    name = 'newsxapi'
+    allowed_domains = ['163.com']
+    # start_urls = ['http://news.163.com/special/0001220O/news_json.js']
+
+    start_news_category = ["guonei", "guoji", "yaowen", "shehui", "war", "money",
+                           "tech", "sports", "ent", "auto", "jiaoyu", "jiankang", "hangkong"]
+    news_url_head = "http://temp.163.com/special/00804KVA/"
+    news_url_tail = ".js?callback=data_callback"
+
+    def start_requests(self):
+        for category in self.start_news_category:
+            category_item = "cm_" + category
+            for count in range(1, 20):  # 每个版块最多爬取前20页数据
+                if count == 1:
+                    start_url = self.news_url_head + category_item + self.news_url_tail
+                else:
+                    start_url = self.news_url_head + category_item + "_0" + self.news_url_tail
+                yield scrapy.Request(start_url, meta={"category": category}, callback=self.parse_news_list)
+
+    def parse_news_list(self, response):
+        # 爬取每个Url
+        json_array = "".join(response.text[14:-1].split())  # 去掉前面的"data_callback"
+        news_array = json.loads(json_array)
+        category = response.meta['category']
+        for row in enumerate(news_array):
+            news_item = NewsspiderItem()
+            row_data = row[1]
+            news_item["url"] = row_data["tlink"]
+
+            yield scrapy.Request(news_item["url"], meta={"news_item": news_item},
+                                 callback=self.parse_news_content)
+
+    def parse_news_content(self, response):
+        # 解析新闻页面
+        source = "//a[@id='ne_article_source']/text()"
+        content_path = "//div[@id='endText']/p/text()"
+        # 只提取新闻<p>标签中的内容
+        content_list = []
+        for data_row in response.xpath(content_path).extract():
+            content_list.append("".join(data_row.split()))
+        content_list = "\"".join(content_list)
+        news_item = response.meta['news_item']
+        news_item["content"] = content_list
+        news_item["source"] = response.xpath(source).extract_first()
+        news_item['title'] = response.xpath("//h1/text()").extract()
+        news_item['date'] = response.xpath("//div[@class='post_time_source']/text()").re(
+            r'[0-9]*-[0-9]*-[0-9]* [0-9]*:[0-9]*:[0-9]*')
+
+        yield news_item
+
+```
+
+通过 api 进行爬取不需要手动设置网页列表。可以设置每天定时运行，轻轻松松获得大量数据。
+
+#### 彩蛋
+
+在一个[知乎回答](<https://www.zhihu.com/question/26992971/answer/93124356>) 提到了网易新闻的[采集页面](http://news.163.com/special/0001220O/news_json.js)，json 中包含了新闻标题、url 等信息。因此可以直接使用这个 json 文件搞点事情。
 
 新建一个 Spider：
 
@@ -298,8 +388,6 @@ class NewplusSpider(scrapy.Spider):
 - 起始 url 为网易新闻的采集页面
 - parse() 方法对 response 中的 json 文件进行处理，提取其中的新闻条目存入 self.newslist。
 - 最后，遍历 self.newslist，对每一条新闻 url 调用 parse_news() 进行爬取即可~
-
-轻轻松松就爬到了 1281 条新闻，看来还是通过 api 直接爬方便啊~
 
 ## 后记
 
