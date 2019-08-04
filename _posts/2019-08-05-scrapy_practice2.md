@@ -145,6 +145,4 @@ class MeizispiderPipeline(ImagesPipeline):
 
 最简单的应对策略是，设置同时发请求的数量以及下载的时间间隔，编辑 settings.py，根据情况设置 CONCURRENT_REQUESTS、DOWNLOAD_DELAY 等参数即可。
 
-## 后记
-运行爬虫，便可以得到
 
