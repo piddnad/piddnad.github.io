@@ -12,7 +12,7 @@ tags: [Tutorial, Python, Scrapy]
 
 事实上，对于网络爬虫，爬取图片和爬取文本大同小异，其思路大致都是：获取网页 -> 从网页中提取有用信息 -> 存储和进一步爬取。这次，我们要从网页中提取的信息从文本变成了图片文件的 URL。除此之外，为了存储图片文件，我们还需要编写 Item Pipline。
 
-## 明确需求 & 定义Item
+## 1 明确需求 & 定义Item
 爬取的网页为妹子图（mzitu.com），毕竟爬妹子图比较有动力（？），既练习了爬虫又能看到很多妹子图。进入官网，我们发现网页中的图片是以图集的方式展示的，即一个图集下有一组主题相同的图片。那么，当图片保存到本地时，我们也创建成相似的文件结构，每张图片的路径是：根文件夹名/图集名称/1.jpg。
 
 所以，我们需要定义三个 Item，分别是图集的名称，图集 URL（也就是图集首个页面的URL），以及图集中每张图片的 URL。编写 items.py 如下：
@@ -28,7 +28,7 @@ class MeizispiderItem(scrapy.Item):
     pass
 ```
 
-## 爬虫编写
+## 2 爬虫编写
 爬虫部分的编写总是最有趣的。事实上，爬虫虽然是整个项目的核心，但是当熟练后，编写爬虫的逻辑也是十分清楚的。
 
 我们的爬虫开始于妹子图首页，然后根据首页的展示图，进入图集的内容页面。分析图集的内容页面，我们可以很容易的发现图集中每张图片的 URL 规律，即 `https://www.mzitu.com+/图集编号+/图片编号` ——那么，当我们爬取了一个图集页面时，我们只需要获取每个图集有多少张图片，就可以获得该图集每张图片的 URL。
@@ -80,7 +80,7 @@ class MzituSpider(scrapy.Spider):
         yield item
 ```
 
-## Item Pipline编写
+## 3 Item Pipline编写
 当 Item 在 Spider 中被收集之后，它将会被传递到 item pipeline，会按照一定的顺序执行对 item 的处理。在前面的工作中，我们获取了图集的名称和图集中每张图片的 URL，在这一步，我们实现将图片文件保存到本地。
 
 Scrapy 提供了一个用来下载图片的 item pipeline ，叫做 ImagesPipeline，具体可以参考
@@ -121,7 +121,7 @@ class MeizispiderPipeline(ImagesPipeline):
         return file_name
 ```
 
-## 其他重要事项
+## 4 其他重要事项
 ### 针对防盗链的策略
 > “若你的爬虫只能欺负一些没有反爬虫限制的网站，那你就像用枪指着手无寸铁的平民一样，算神马英雄？要欺负就欺负反爬虫网站！”——某教程
 
@@ -137,12 +137,80 @@ class MeizispiderPipeline(ImagesPipeline):
         referer = request.url
         if referer:
             request.headers['referer'] = referer
-
 ```
 
 ### 针对反爬虫的策略
-进行了上面的设置后运行爬虫，还是会有大量的图片页面返回 403 错误，这是因为服务器设置了反爬虫。
+直接运行爬虫，我们会发现还是会有大量的图片页面返回 403 错误，这是因为服务器设置了反爬虫。
 
 最简单的应对策略是，设置同时发请求的数量以及下载的时间间隔，编辑 settings.py，根据情况设置 CONCURRENT_REQUESTS、DOWNLOAD_DELAY 等参数即可。
+
+### 后记：框架与不使用框架的思考
+事实上，对于这类简单的任务，不使用爬虫框架也能实现很好的效果，而且代码更少。例如，我又利用 Python 的 requests 和 BeautifulSoup 库，仅仅编写了不到60行代码，也能实现相同功能。
+
+这的确应该引起我们的思考——使用框架就一定比不使用框架好吗？框架的好处在于提供了统一的项目结构，以及易用的接口和预设类，因此对于庞大的工程，使用框架会提供很好的 BUFF 加持。但是，爬虫这个东西其实说复杂也不复杂，对于一些简单的任务，有时不使用框架反而相比使用框架更加简洁、优美。
+
+最后，附上不使用框架的爬虫代码，感受一下简洁的代码之美。
+
+```
+import requests
+from bs4 import BeautifulSoup
+import os
+import time
+
+start_url = ['https://www.mzitu.com/']
+headers = {
+    'cookie': 'Hm_lvt_dbc355aef238b6c32b43eacbbf161c3c=1562490131,1562490132,1564906073; Hm_lpvt_dbc355aef238b6c32b43eacbbf161c3c=1564977351',
+    'referer': 'https://www.mzitu.com/185653',
+    'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36'
+}
+
+# 获取每个图集的URL
+def get_album_info(url, headers):
+    response = requests.get(url, headers=headers)
+    soup = BeautifulSoup(response.text, 'lxml')
+    for i in soup.find_all(target = '_blank'):
+        if i.select('img'):
+            album_url = i.get('href')
+            get_images(album_url, headers)
+            time.sleep(2)
+            print(album_url)
+    if soup.select('a.next.page-numbers')[0].get('href'):
+        next_url = soup.select('a.next.page-numbers')[0].get('href')
+        get_album_info(next_url, headers)
+
+
+def get_images(album_url, headers):
+    try:
+        response_album = requests.get(album_url, headers=headers)
+        soup_album = BeautifulSoup(response_album.text, 'lxml')
+        album_name = soup_album.select('h2')[0].get_text()
+        page_num = soup_album.select('body > div.main > div.content > div.pagenavi > a:nth-of-type(5) > span')[0].get_text()
+        
+        for i in range(1, int(page_num) + 1):
+            page_url = album_url + '/' + str(i)
+            response_page = requests.get(page_url, headers=headers)
+            print(page_url)
+            soup = BeautifulSoup(response_page.text, 'lxml')
+            print('正在下载图集“{}”的第{}/{}张图片'.format(album_name, i, int(page_num)))
+            print(soup.select('.main-image p a img')[0].get('src'))
+
+            if soup.select('.main-image p a img')[0].get('src'):
+                img_url = soup.select('.main-image p a img')[0].get('src')
+                file_name = 'Mzitu/{}'.format(album_name)
+                if not os.path.exists(file_name):
+                    os.makedirs(file_name)
+                
+                print(file_name)
+                path ='%s/%s.jpg' % (file_name, i)
+                with open(path, 'wb+') as f:
+                    f.write(requests.get(img_url, headers=headers).content)
+                print(img_url)
+    except:
+        None
+
+if __name__=='__main__':
+    for url in start_url:
+        get_album_info(url, headers)
+```
 
 
