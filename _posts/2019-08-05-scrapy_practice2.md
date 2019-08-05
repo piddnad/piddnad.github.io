@@ -171,20 +171,20 @@ def get_album_info(url, headers):
     for i in soup.find_all(target = '_blank'):
         if i.select('img'):
             album_url = i.get('href')
-            get_images(album_url, headers)
+            get_images(album_url, headers)  # 下载该图集的图片
             time.sleep(2)
             print(album_url)
-    if soup.select('a.next.page-numbers')[0].get('href'):
+    if soup.select('a.next.page-numbers')[0].get('href'):  # 翻页
         next_url = soup.select('a.next.page-numbers')[0].get('href')
         get_album_info(next_url, headers)
 
-
+# 下载图片
 def get_images(album_url, headers):
     try:
         response_album = requests.get(album_url, headers=headers)
         soup_album = BeautifulSoup(response_album.text, 'lxml')
-        album_name = soup_album.select('h2')[0].get_text()
-        page_num = soup_album.select('body > div.main > div.content > div.pagenavi > a:nth-of-type(5) > span')[0].get_text()
+        album_name = soup_album.select('h2')[0].get_text()  # 图集名称
+        page_num = soup_album.select('body > div.main > div.content > div.pagenavi > a:nth-of-type(5) > span')[0].get_text()  # 图片张数
         
         for i in range(1, int(page_num) + 1):
             page_url = album_url + '/' + str(i)
@@ -195,15 +195,15 @@ def get_images(album_url, headers):
             print(soup.select('.main-image p a img')[0].get('src'))
 
             if soup.select('.main-image p a img')[0].get('src'):
-                img_url = soup.select('.main-image p a img')[0].get('src')
+                img_url = soup.select('.main-image p a img')[0].get('src')  # 获得图片URL
                 file_name = 'Mzitu/{}'.format(album_name)
                 if not os.path.exists(file_name):
                     os.makedirs(file_name)
-                
                 print(file_name)
+
                 path ='%s/%s.jpg' % (file_name, i)
                 with open(path, 'wb+') as f:
-                    f.write(requests.get(img_url, headers=headers).content)
+                    f.write(requests.get(img_url, headers=headers).content)   # 保存图片
                 print(img_url)
     except:
         None
