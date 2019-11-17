@@ -51,10 +51,10 @@ menu:
 
 # Link settings
 links: # 友情链接
-  - title: Simon's Blog
-    url: https://www.simonyy.com/
   - title: Ama2in9
     url: https://ama2in9.top/
+  - title: Simon
+    url: https://www.simonyy.com/
   # - title: site-name3
   #   url: http://www.example3.com/
 
