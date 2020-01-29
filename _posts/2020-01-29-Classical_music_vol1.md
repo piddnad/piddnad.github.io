@@ -35,6 +35,8 @@ tags: [Classical Music]
 
 **Tchaikovsky： Piano Concerto No.1 in B Flat Minor, Op. 23:I. Allegro non troppo e molto maestoso**
 
+[B站郎朗演奏视频（推荐！）](https://www.bilibili.com/video/av21435711/)
+
 [网易云试听链接](https://music.163.com/song?id=426107885&userid=41254148)
 
 气势磅礴的一部作品。在开始的一长段引子及四小节强奏后，伴随的是小提琴和大提琴温暖的声音以及钢琴洪亮的和弦，俨然一幅宏伟壮观的场景，让人感觉非常畅快。
