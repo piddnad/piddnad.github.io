@@ -21,8 +21,9 @@ tags: [Classical Music]
 
 **Mozart: Piano Sonata No. 16 in C Major, K545: I. Allegro** 
 
+[B站郎朗演奏视频（强烈推荐！！！）](https://www.bilibili.com/video/av56878759/)
+
 [网易云试听链接](https://music.163.com/song?id=536086195&userid=41254148)
-[B站郎朗演奏视频（推荐！！！）](https://www.bilibili.com/video/av56878759/)
 
 这部作品是焦元溥老师在其古典音乐入门电台「焦享乐」里面播放的第一首曲子，也是我自己非常喜欢的一首曲子，因此第一个就推荐它了~
 
