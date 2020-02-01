@@ -31,7 +31,7 @@ tags: [Classical Music]
 
 ## 2.柴可夫斯基「第一号钢琴协奏曲 Op.23」
 
-**Tchaikovsky： Piano Concerto No.1 in B Flat Minor, Op. 23:I. Allegro non troppo e molto maestoso**
+**Tchaikovsky: Piano Concerto No.1 in B Flat Minor, Op. 23:I. Allegro non troppo e molto maestoso**
 
 [B站郎朗演奏视频（推荐！）](https://www.bilibili.com/video/av21435711/)
 
