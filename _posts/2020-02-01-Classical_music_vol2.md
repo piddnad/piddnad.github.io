@@ -6,11 +6,13 @@ categories: [生活]
 tags: [Classical Music]
 ---
 
-## 1. 巴赫「G弦上的咏叹调」
+## 1. 巴赫「G弦上的咏叹调 BWV 1068」
 
 **Orchestral Suite No. 3 in D Major, BWV 1068: "Air"**
 
 [网易云试听链接](https://music.163.com/song?id=16409470&userid=41254148)
+
+[钢琴版，郎朗演奏](https://music.163.com/song?id=512613128&userid=41254148)
 
 这首应该是大家都耳熟能详的一部作品了，在很多影视作品中都有出现过。
 
@@ -19,7 +21,7 @@ tags: [Classical Music]
 这部作品给我带来的最多的感觉就是平静。旋律中能听出纯净的诗意，甚至能感受到圣洁的光辉，可能这就是古典音乐的魅力吧。
 
 
-## 2. 肖邦 「G小调第一号叙事曲」
+## 2. 肖邦 「G小调第一号叙事曲 Op.23」
 
 **Chopin: Ballade No.1 in G minor, Op.23**
 
@@ -32,7 +34,7 @@ tags: [Classical Music]
 聆听这首作品，就像是立陶宛的老人在耳边娓娓道来，而在面前徐徐展开的，是一幅宏伟的史诗画卷。画卷中的跌宕起伏，都在旋律中。
 
 
-## 3. 莫扎特 「E小调小提琴奏鸣曲第二乐章」
+# 3. 莫扎特 「E小调小提琴奏鸣曲第二乐章 K.304」
 
 **Mozart：Sonata For Piano And Violin In E Minor, K.304:2. Tempo di minuetto**
 
