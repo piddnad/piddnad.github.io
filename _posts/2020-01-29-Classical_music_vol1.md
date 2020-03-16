@@ -21,7 +21,7 @@ tags: [Classical Music]
 
 [B站郎朗演奏视频（强烈推荐！！！）](https://www.bilibili.com/video/av56878759/)
 
-[网易云试听链接](https://music.163.com/song?id=536086195&userid=41254148)
+[网易云试听链接](https://music.163.com/song?id=536086195)
 
 > 这部作品是焦元溥老师在其古典音乐入门电台「焦享乐」里面播放的第一首曲子，也是我自己非常喜欢的一首曲子，因此第一个就推荐它了~
 
@@ -35,7 +35,7 @@ tags: [Classical Music]
 
 [B站郎朗演奏视频（推荐！）](https://www.bilibili.com/video/av21435711/)
 
-[网易云试听链接](https://music.163.com/song?id=426107885&userid=41254148)
+[网易云试听链接](https://music.163.com/song?id=426107885)
 
 > 在本科宿舍每次放出来这首曲子的时候，都会有某位舍友跟着一起哼唱hhh。
 
@@ -48,7 +48,7 @@ tags: [Classical Music]
 
 **Violin Concerto In E Minor, Op.64, MWV O14:1. Allegro molto appassionato** 
 
-[网易云试听链接](https://music.163.com/song?id=2123602&userid=41254148)
+[网易云试听链接](https://music.163.com/song?id=2123602)
 
 > 门德尔松的作品常被认为是肤浅的，但这部作品却从未得到这样的评价。这部作品与贝多芬的《D大调小提琴协奏曲》、勃拉姆斯的《D大调小提琴协奏曲》并称为“三大小提琴协奏曲”。
 

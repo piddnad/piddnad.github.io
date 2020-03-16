@@ -10,9 +10,9 @@ tags: [Classical Music]
 
 **Orchestral Suite No. 3 in D Major, BWV 1068: "Air"**
 
-[网易云试听链接](https://music.163.com/song?id=16409470&userid=41254148)
+[网易云试听链接](https://music.163.com/song?id=16409470)
 
-[钢琴版，郎朗演奏](https://music.163.com/song?id=512613128&userid=41254148)
+[钢琴版，郎朗演奏](https://music.163.com/song?id=512613128)
 
 这首应该是大家都耳熟能详的一部作品了，在很多影视作品中都有出现过。
 
@@ -25,7 +25,7 @@ tags: [Classical Music]
 
 **Chopin: Ballade No.1 in G minor, Op.23**
 
-[网易云试听链接](https://music.163.com/song?id=32696188&userid=41254148)
+[网易云试听链接](https://music.163.com/song?id=32696188)
 
 这首作品的开头的旋律有一种幽静隐秘的感觉，后面旋律急转直上、直接炸裂。记得第一次听的时候睡午觉，听着前面慢慢进入梦乡然后被后面震醒……后来了解了一下这首歌的创作背景，大致明白了为什么这部作品的旋律没有那么简单，以及为何叫做「叙事曲」。
 
@@ -38,7 +38,7 @@ tags: [Classical Music]
 
 **Mozart：Sonata For Piano And Violin In E Minor, K.304:2. Tempo di minuetto**
 
-[网易云试听链接](https://music.163.com/song?id=36947011&userid=41254148)
+[网易云试听链接](https://music.163.com/song?id=36947011)
 
 这是一部很深情的作品，先了解一下这部作品的背景。
 
