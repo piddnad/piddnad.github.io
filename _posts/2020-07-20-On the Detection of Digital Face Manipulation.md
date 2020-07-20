@@ -6,7 +6,8 @@ categories: [论文]
 tags: [Paper, Deep Learning, Facial Forgery Detection]
 ---
 
-* On the Detection of Digital Face Manipulation
+On the Detection of Digital Face Manipulation
+
 * Publication：CVPR 2020
 * Authors：Hao Dang, Feng Liu, Joel Stehouwer, Xiaoming Liu, Anil K. Jain
 * Affiliation：Michigan State University
@@ -20,9 +21,9 @@ tags: [Paper, Deep Learning, Facial Forgery Detection]
 * 构建一个新的综合假脸数据集 DFFD
 * 提出一种新的定位精度度量方式
 
-## 2 Proposed Method
+## 1 Proposed Method
 
-### 2.1 Motivation
+### 1.1 Motivation
 
 ![](/imgs/20200720/1.jpg)
 
@@ -32,7 +33,7 @@ tags: [Paper, Deep Learning, Facial Forgery Detection]
 
 * 相当于增加一个辅助监督信号，显示约束网络去关注被篡改区域
 
-### 2.2 Attention-base Layer
+### 1.2 Attention-base Layer
 
 本文提出的 attention map 有两种生成方法：
 
@@ -45,7 +46,7 @@ tags: [Paper, Deep Learning, Facial Forgery Detection]
     ![](/imgs/20200720/3.jpg)
 * Regression：使用若干卷积层直接回归
 
-### 2.3 Loss Functions
+### 1.3 Loss Functions
 
 最终训练损失：分类损失 + 注意力图损失，使用超参数 $\lambda$ 控制权重。
 
@@ -71,7 +72,7 @@ $$
 
 * unsupervised：$\lambda = 0$，此时在不监督 map 的情况下训练网络
 
-## 3 Diverse Fake Face Dataset
+## 2 Diverse Fake Face Dataset
 
 TLDR
 * 包含了之前几个大型 deepfake dataset（例如FF++），还包括了一些新生成的 fake face images
@@ -85,9 +86,9 @@ TLDR
     * Face editing：FaceAPP（from FFHQ），StarGAN（from CelebA）
     * Face Synthesis：PGGAN，StyleGAN
 
-## 4 Experiments
+## 3 Experiments
 
-### 4.1 Ablation Study
+### 3.1 Ablation Study
 
 **注意力图带来的增益**
 
@@ -105,17 +106,17 @@ TLDR
 
 文章给出的解释是：因为更深的网络具有更大的参数空间，因此网络可以直接回归 attention map；而对于更小更浅的网络，直接生成的 attention map 会引起参数空间的争用（contention）。而MAM 提供的先验约束减少了这种竞争（只需要拟合 10 个参数），因此提高了性能。
 
-### 4.2 Foregery Detection Results
+### 3.2 Foregery Detection Results
 
 ![](/imgs/20200720/6.jpg)
 
 在 UADFV 和 Celeb-DF 上和之前的方法进行比较，证明了注意力机制到来的提升，以及数据多样性对模型的影响（相同网络结构采用 DFFD 训练比用 UADFV 性能要好很多）。
 
-### 4.3 Manipulation Localization Results
+### 3.3 Manipulation Localization Results
 
 这部分没有细看，大致是分析网络生成的 attention map 对比 ground-truth mask 的 localization 性能分析，还提出了一个新的定位度量方式 IINC，比直接算余弦相似度、IoU 或者 PBCA（Pixel-wise Binary Classiﬁcation Accuracy）更加可靠。
 
-## 5 Conclusion
+## 4 Conclusion
 
 最近好几篇 face forgery detection 方向的工作都提出了通过添加各种各样的 mask 来改善检测性能的方法。其核心思想都是增加额外的监督信号，因而隐式或显式地约束网络去重点关注被篡改区域。这种多任务学习的思想还是非常值得借鉴的。
 
