@@ -73,7 +73,7 @@ $ ioreg -lw0 | grep IODisplayPrefsKey
 https://comsysto.github.io/Display-Override-PropertyList-File-Parser-and-Generator-with-HiDPI-Support-For-Scaled-Resolutions/ 
 ```
 
-在右侧填入上一步记录的 DisplayProductID 和 DisplayVendorId ，配置想要的分辨率，然后点击左边的 ***Download DisplayProductID-xxxx*** 按钮下载你配置好的 plist 文件。
+填入上一步记录的 DisplayProductID 和 DisplayVendorId ，配置想要的分辨率，然后点击 ***Download DisplayProductID-xxxx*** 下载配置好的 plist 文件。
 
 ### Step 4
 这一步由于需要往系统文件夹写入文件，所以必须先禁用系统完整性保护（System Integrity Protection），步骤如下：
@@ -87,6 +87,10 @@ Mac 自动重启后，在 Terminal 输入如下命令，将 plist 文件拷贝�
 ```
 $ sudo cp ~/Downloads/DisplayProductID-xxxx.plist /System/Library/Displays/Contents/Resources/Overrides/DisplayVendorID-xxxx/DisplayProductID-xxxx
 ```
+
+> 2020.10 注
+> 这一步如不能成功拷贝，可以尝试运行 [one-key-hidpi](https://github.com/xzhih/one-key-hidpi/blob/master/README-zh.md)，输入 2，就能成功拷贝了，然后退出 one-key-hidpi 即可。
+> 快速运行 one-key-hidpi: $ bash -c "$(curl -fsSL https://raw.githubusercontent.com/xzhih/one-key-hidpi/master/hidpi.sh)"
 
 完成后，建议重新开启系统完整性保护，步骤同上，命令为 `$ csrutil enable` 。
 
