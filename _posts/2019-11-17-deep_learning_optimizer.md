@@ -2,7 +2,7 @@
 layout: post
 title:  "聊一聊深度学习中的优化器"
 date:   2019-11-17
-categories: [学习与分享]
+categories: [论文]
 tags: [Deep Learning]
 ---
 
