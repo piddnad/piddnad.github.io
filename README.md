@@ -1,7 +1,7 @@
 [Piddnad的博客](https://piddnad.github.io/)
 ==========
   
-[Piddnad的博客](https://piddnad.github.io/) 主题基于一个简洁的、多设备支持的 Jekyll 博客模板 [maupassant-jekyll](https://github.com/alafighting/maupassant-jekyll.git)，同时参考了 [oukohou](https://github.com/kuanghy) 的 [博客主题](https://github.com/oukohou/oukohou.github.io) 进行了修改和优化，感谢。🙏
+[Piddnad的博客](https://piddnad.github.io/) 主题基于一个简洁的、多设备支持的 Jekyll 博客模板 [maupassant-jekyll](https://github.com/alafighting/maupassant-jekyll.git)，同时参考了 [oukohou](https://github.com/oukohou) 的 [博客主题](https://github.com/oukohou/oukohou.github.io) 进行了修改和优化，感谢。🙏
 
 模板预览：
 
@@ -23,6 +23,7 @@ gem install bundler jekyll
 ```
 git clone https://github.com/alafighting/maupassant-jekyll.git maupassant
 cd maupassant
+gem install jekyll-paginate
 jekyll build
 jekyll server
 ```
