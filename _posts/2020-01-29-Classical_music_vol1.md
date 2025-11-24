@@ -2,7 +2,7 @@
 layout: post
 title:  "2020.01.29 古典音乐推荐 Vol.1 "
 date:   2020-01-29 21:20:00 +0800--
-categories: [生活]
+categories: [音乐]
 tags: [Classical Music]
 ---
 

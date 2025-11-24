@@ -2,7 +2,7 @@
 layout: post
 title:  "2020.03.09 古典音乐推荐 Vol.3 "
 date:   2020-03-09 23:20:00 +0800--
-categories: [生活]
+categories: [音乐]
 tags: [Classical Music]
 ---
 
