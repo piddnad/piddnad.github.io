@@ -10,7 +10,22 @@
   <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %} | {{ site.subtitle}}</title>
   
   <meta name="keywords" content="{% if page.keywords %}{{ page.keywords | split: ' ' | join: ', ' }}{% else %}{{ site.keywords }}{% endif %}">
-  <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
+  {% if page.description %}
+    <meta name="description" content="{{ page.description }}">
+    <meta property="og:description" content="{{ page.description }}">
+  {% elsif page.excerpt %}
+    <meta name="description" content="{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}">
+    <meta property="og:description" content="{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}">
+  {% else %}
+    <meta name="description" content="{{ site.description }}">
+    <meta property="og:description" content="{{ site.description }}">
+  {% endif %}
+
+  <meta property="og:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
+  
+  {% if page.image %}
+    <meta property="og:image" content="{{ site.url }}{{ page.image }}">
+  {% endif %}
   
   
   <link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico">
@@ -293,7 +308,7 @@
       </div>
       
       <div id="footer">
-        Copyright &copy; <span id="cur_year"></span> <a href="https://www.piddnad.cn/">Piddnad</a> - All Rights
+        Copyright &copy; <span id="cur_year"></span> <a href="https://piddnad.github.io">Piddnad</a> - All Rights
         Reserved.
         Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a>
         <script type="text/javascript">var cur_date = new Date();
