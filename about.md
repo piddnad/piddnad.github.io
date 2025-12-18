@@ -6,8 +6,10 @@ permalink: /about/
 
 ![](/imgs/about.jpg){:width="100%"}
 
-
-<font color="red" size=5px> 2023.08 Update: Welcome to <a href="/xiaoyangkang" color="blue"> My Personal Homepage</a> </font>
+<div style="background-color: #fff8c5; border: 1px solid #d4a72c; border-radius: 6px; padding: 10px 15px; margin: 20px 0; color: #4a4a4a;">
+  <strong>📅 2023.08 Update:</strong> 
+  Welcome to <a href="/xiaoyangkang" style="color: #1E90FF; font-weight: bold; text-decoration: underline;">My Personal Homepage</a>
+</div>
 
 ****
 
