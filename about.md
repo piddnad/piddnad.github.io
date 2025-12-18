@@ -20,5 +20,4 @@ permalink: /about/
 > 主要研究方向包括机器视觉、目标检测和人脸伪造检测，欢迎来信交流。E-mail: piddnad@gmail.com
 
 
-> Freedom is the right of all sentient beings.
-> -- Optimus Prime
+> Capable of using elemental energy without a Vision... You are an exception, it appears.
