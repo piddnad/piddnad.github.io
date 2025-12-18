@@ -54,6 +54,13 @@
 </head>
 
   <body>
+    <div style="display:none;">
+      {% if page.image %}
+        <img src="{{ site.url }}{{ page.image }}" alt="weixin-share-img">
+      {% else %}
+        <img src="{{ site.url }}/favicon.ico" alt="weixin-share-default">
+      {% endif %}
+    </div>
     <div class="body_container">
       <div id="header">
         <div class="site-name">
