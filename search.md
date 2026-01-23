@@ -12,7 +12,11 @@ permalink: /search
   }
 </script>
 
-正在查看 "<script>document.write(key);</script>" 下的文章
+正在查看 "<span id="search_key"></span>" 下的文章
+<script>
+  var key_ui = document.getElementById('search_key');
+  key_ui.textContent = key;
+</script>
 
 <div class="post">
   <div class="post-archive">

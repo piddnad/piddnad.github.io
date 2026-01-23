@@ -11,18 +11,18 @@ layout: base
       </time>
       {% if page.categories.size > 0 %} |
       <span class="post-category">
-      <i class="icon-post-category">
-      {% for page_category in page.categories %}
+        <i class="icon-post-category">
+          {% for page_category in page.categories %}
           <a href="{{ site.baseurl }}/category/#{{ page_category }}">{{ page_category }}</a>
-      {% endfor %}
-      </i>
-      </span> {% endif %} {% if page.tags.size > 0 %} |
-          <span class="post-tag">
-          <i class="icon-post-tag">
-          {% for page_tag in page.tags %}
-              <a href="{{ site.baseurl }}/tags/#{{ page_tag }}">{{ page_tag }}</a>
           {% endfor %}
-          </i>
+        </i>
+      </span> {% endif %} {% if page.tags.size > 0 %} |
+      <span class="post-tag">
+        <i class="icon-post-tag">
+          {% for page_tag in page.tags %}
+          <a href="{{ site.baseurl }}/tags/#{{ page_tag }}">{{ page_tag }}</a>
+          {% endfor %}
+        </i>
       </span>{% endif %}
 
 
@@ -49,26 +49,26 @@ layout: base
   <!--script src="/js/av-min.js"></script-->
   <!--script src="//unpkg.com/valine/dist/Valine.min.js"></script-->
   <script src="https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js"></script>
-  
 
-  <p><br/>有什么想法，留个评论吧：</p>
+
+  <p><br />有什么想法，留个评论吧：</p>
   <div id="valine_comment" class="fb_comments_container"></div>
   <script>
-      var notify = '{{site.valine.notify}}' === true;
-      var verify = '{{site.valine.verify}}.>' === true;
-      var visitor = '{{site.valine.visitor}}.>' === true;
-      new Valine({
-          av: AV,
-          el: '#valine_comment',
-          notify: notify,
-          verify: verify,
-          // smiles_url: '/smiles',
-          visitor: true,
-          app_id: '{{site.valine.app_id}}',
-          app_key: '{{site.valine.app_key}}',
-          placeholder: '{{site.valine.placeholder}}',
-          avatar: '{{site.valine.avatar}}',
-      });
+    var notify = '{{site.valine.notify}}' === 'true';
+    var verify = '{{site.valine.verify}}' === 'true';
+    var visitor = '{{site.valine.visitor}}' === 'true';
+    new Valine({
+      av: AV,
+      el: '#valine_comment',
+      notify: notify,
+      verify: verify,
+      // smiles_url: '/smiles',
+      visitor: true,
+      app_id: '{{site.valine.app_id}}',
+      app_key: '{{site.valine.app_key}}',
+      placeholder: '{{site.valine.placeholder}}',
+      avatar: '{{site.valine.avatar}}',
+    });
   </script>
 
 </article>
