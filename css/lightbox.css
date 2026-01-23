@@ -1,0 +1,131 @@
+/* Lightbox Overlay */
+#lightbox-overlay {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.9);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    flex-direction: column;
+    /* Stack image and thumbnails */
+    justify-content: center;
+    align-items: center;
+}
+
+#lightbox-overlay.active {
+    opacity: 1;
+}
+
+/* Lightbox Content (Image Container) */
+.lightbox-content {
+    position: relative;
+    max-width: 90%;
+    max-height: 75vh;
+    /* Reduce height to make room for thumbnails */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* Lightbox Image */
+#lightbox-img {
+    max-width: 100%;
+    max-height: 100%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+    object-fit: contain;
+}
+
+/* Close Button */
+.lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+    cursor: pointer;
+    z-index: 10002;
+    line-height: 1;
+}
+
+.lightbox-close:hover,
+.lightbox-close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Navigation Buttons */
+.lightbox-nav {
+    position: absolute;
+    top: 50%;
+    /* Center vertically based on screen, maybe better relative to image? kept distinct for now */
+    transform: translateY(-50%);
+    color: #f1f1f1;
+    font-size: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 10001;
+    padding: 10px 20px;
+    user-select: none;
+    transition: 0.3s;
+}
+
+.lightbox-nav:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+}
+
+.lightbox-prev {
+    left: 0;
+    border-radius: 0 5px 5px 0;
+}
+
+.lightbox-next {
+    right: 0;
+    border-radius: 5px 0 0 5px;
+}
+
+/* Thumbnails Strip */
+.lightbox-thumbnails {
+    display: flex;
+    width: 100%;
+    height: 80px;
+    justify-content: center;
+    align-items: center;
+    overflow-x: auto;
+    gap: 10px;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    bottom: 0;
+    z-index: 10001;
+}
+
+.lightbox-thumb {
+    height: 60px;
+    width: auto;
+    opacity: 0.5;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.2s;
+    border-radius: 4px;
+}
+
+.lightbox-thumb:hover {
+    opacity: 0.8;
+}
+
+.lightbox-thumb.active {
+    opacity: 1;
+    border-color: #fff;
+    transform: scale(1.1);
+}

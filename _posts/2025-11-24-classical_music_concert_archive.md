@@ -1,9 +1,10 @@
 ---
 layout: post
 title:  "2025｜Piddnad 的音乐会回忆 "
-date:   2025-12-17 22:42:00 +0800--
+date:   2025-12-17 22:42:00 +0800
 categories: [音乐]
 tags: [Classical Music, Essay]
+toc_selectors: h2
 description: "从席夫的 Omakase 到郎朗的魔法，记录 2025 年那些治愈我的现场瞬间。"
 image: /imgs/20251217/250508.jpg
 ---
