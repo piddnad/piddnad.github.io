@@ -12,7 +12,7 @@ permalink: /search
   }
 </script>
 
-正在查看 "<span id="search_key"></span>" 下的文章
+<span data-i18n="viewing_tag_prefix">正在查看</span> "<span id="search_key"></span>" <span data-i18n="viewing_tag_suffix">下的文章</span>
 <script>
   var key_ui = document.getElementById('search_key');
   key_ui.textContent = key;
@@ -21,7 +21,6 @@ permalink: /search
 <div class="post">
   <div class="post-archive">
   {% for post in site.posts %}
-    <!-- <h2>{{ post.date | date: "%Y" }}</h2> -->
     <ul class="listing" style="display: none;">
       <li>
       <span class="date">{{ post.date | date: "%Y/%m/%d" }}</span>
@@ -50,7 +49,11 @@ permalink: /search
       }
     }
     if ($('.post-archive a').length == 0) {
-      $('.post-archive').html('<font color="red">没有记录</font>')
+      var noRecords = '<font color="red"><span data-i18n="no_records">没有记录</span></font>';
+      $('.post-archive').html(noRecords)
+      if (window.SiteI18n && document.body && document.body.getAttribute('data-lang')) {
+        window.SiteI18n.apply(document.body.getAttribute('data-lang'));
+      }
     }
   }
 </script>

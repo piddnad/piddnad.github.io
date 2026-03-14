@@ -10,11 +10,19 @@ document.addEventListener('DOMContentLoaded', function () {
     lightbox.id = 'lightbox-overlay';
     lightbox.innerHTML = `
     <div class="lightbox-content">
+      <button class="lightbox-nav lightbox-prev" type="button" aria-label="Previous image">
+        <svg class="lightbox-nav-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M14.5 5.5L8 12l6.5 6.5" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </button>
       <img id="lightbox-img" src="" alt="">
+      <button class="lightbox-nav lightbox-next" type="button" aria-label="Next image">
+        <svg class="lightbox-nav-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M9.5 5.5L16 12l-6.5 6.5" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </button>
     </div>
-    <span class="lightbox-close">&times;</span>
-    <span class="lightbox-nav lightbox-prev">&lsaquo;</span>
-    <span class="lightbox-nav lightbox-next">&rsaquo;</span>
+    <button class="lightbox-close" type="button" aria-label="Close image viewer">&times;</button>
     <div class="lightbox-thumbnails"></div>
   `;
     document.body.appendChild(lightbox);

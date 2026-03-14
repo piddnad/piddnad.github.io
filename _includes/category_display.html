@@ -1,0 +1,13 @@
+{%- assign cn = include.name -%}
+{%- assign en = '' -%}
+{%- case cn -%}
+  {%- when '教程' -%}{%- assign en = 'Tutorials' -%}
+  {%- when '技术' -%}{%- assign en = 'Tech' -%}
+  {%- when '论文' -%}{%- assign en = 'Papers' -%}
+  {%- when '分享' -%}{%- assign en = 'Sharing' -%}
+  {%- when '随笔' -%}{%- assign en = 'Essays' -%}
+  {%- when '算法' -%}{%- assign en = 'Algorithms' -%}
+  {%- when '音乐' -%}{%- assign en = 'Music' -%}
+{%- endcase -%}
+<span data-lang-block="zh">{{ cn }}</span>
+<span data-lang-block="en" style="display:none;">{%- if en != '' -%}{{ en }}{%- else -%}{{ cn }}{%- endif -%}</span>

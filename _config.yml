@@ -10,7 +10,7 @@ email: piddnad@gmail.com
 
 # Build settings
 permalink: /:year/:month/:day/:title/
-exclude: ["README.md", "changelog.md"]
+exclude: ["README.md", "changelog.md", "vendor"]
 # gems: [jekyll-paginate]
 plugins:
   - jekyll-paginate

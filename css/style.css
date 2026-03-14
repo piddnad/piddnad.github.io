@@ -5,6 +5,10 @@
  * @version 2.0
  * @link http://chopstack.com
  */
+html.i18n-loading body {
+  visibility: hidden;
+}
+
 body {
   background-color: #fdfdfd;
   color: #444;
@@ -1077,4 +1081,144 @@ code {
 
 #label_box a:hover {
   background-color: #BFBFBF
+}
+/* language switch */
+#header {
+  position: relative;
+}
+
+#header .lang-switch {
+  position: absolute;
+  right: 0;
+  top: 6px;
+  width: 106px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid #cfcfcf;
+  border-radius: 999px;
+  background: #f6f6f6;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+}
+
+#header .lang-switch .lang-switch-track {
+  position: absolute;
+  inset: 0;
+}
+
+#header .lang-switch .lang-switch-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 50px;
+  height: 30px;
+  border-radius: 999px;
+  background: #ffffff;
+  border: 1px solid #d7d7d7;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.10);
+  transition: none;
+}
+
+#header .lang-switch .lang-switch-label {
+  position: relative;
+  z-index: 1;
+  width: 50%;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  user-select: none;
+  transition: color .2s ease;
+}
+
+#header .lang-switch .lang-switch-label-zh {
+  color: #666;
+}
+
+#header .lang-switch .lang-switch-label-en {
+  color: #888;
+}
+
+#header .lang-switch[data-lang-current="en"] .lang-switch-thumb {
+  transform: translateX(52px);
+}
+
+body.lang-ready #header .lang-switch .lang-switch-thumb {
+  transition: transform .22s ease;
+}
+
+#header .lang-switch[data-lang-current="en"] .lang-switch-label-zh {
+  color: #888;
+}
+
+#header .lang-switch[data-lang-current="en"] .lang-switch-label-en {
+  color: #666;
+}
+
+#header .lang-switch:hover {
+  transform: translateY(-1px);
+  border-color: #bdbdbd;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.10);
+}
+
+#header .lang-switch:active {
+  transform: translateY(0);
+}
+
+#header .lang-switch:focus {
+  outline: 2px solid #b8b8b8;
+  outline-offset: 2px;
+}
+
+/* paginator text centering fix */
+.page-navigator a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 88px;
+  box-sizing: content-box;
+}
+
+@media print, screen and (max-width: 48em) {
+  #header .lang-switch {
+    top: -2px;
+    right: 50%;
+    transform: translateX(50%);
+    width: 96px;
+    height: 32px;
+  }
+
+  #header .lang-switch .lang-switch-thumb {
+    width: 45px;
+    height: 26px;
+  }
+
+  #header .lang-switch[data-lang-current="en"] .lang-switch-thumb {
+    transform: translateX(47px);
+  }
+
+  #header .lang-switch .lang-switch-label {
+    font-size: 11px;
+  }
+
+  #header .lang-switch:hover {
+    transform: translateX(50%);
+  }
+
+  #header #nav-menu {
+    width: 100%;
+    text-align: center;
+  }
+
+  .page-navigator a {
+    min-width: 84px;
+    padding: 4px 14px;
+    height: 24px;
+    line-height: 24px;
+  }
 }
