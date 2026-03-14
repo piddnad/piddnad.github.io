@@ -23,6 +23,9 @@
       page_label: '第 {current}/{total} 页',
       category_page_title: '文章分类',
       page_title_category: '分类',
+      page_title_about: '关于',
+      page_title_tags: '标签',
+      page_title_search: '搜索',
       archives_heading: '归档',
       tags_heading: '标签',
       viewing_tag_prefix: '正在查看',
@@ -54,6 +57,9 @@
       page_label: 'Page {current}/{total}',
       category_page_title: 'Categories',
       page_title_category: 'Categories',
+      page_title_about: 'About',
+      page_title_tags: 'Tags',
+      page_title_search: 'Search',
       archives_heading: 'Archives',
       tags_heading: 'Tags',
       viewing_tag_prefix: 'Viewing posts under',
@@ -182,6 +188,12 @@
       document.title = I18N[lang].page_title_category + suffix;
     } else if (path === '/archives' || path === '/archives/index.html') {
       document.title = I18N[lang].archives_heading + suffix;
+    } else if (path === '/about' || path === '/about/index.html') {
+      document.title = I18N[lang].page_title_about + suffix;
+    } else if (path === '/tags' || path === '/tags/index.html') {
+      document.title = I18N[lang].page_title_tags + suffix;
+    } else if (path === '/search' || path === '/search/index.html') {
+      document.title = I18N[lang].page_title_search + suffix;
     }
   }
 
