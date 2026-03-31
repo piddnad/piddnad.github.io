@@ -4,6 +4,7 @@ title:  "论文阅读：使用人工智能评估和准确诊断儿科疾病"
 date:   2019-03-25
 categories: [论文]
 tags: [Paper, Deep Learning, Biomedical, EHR]
+published: false
 ---
 
 本文 2019 年 2 月 11 日发表在 Nature 子刊 Medicine ，是全球顶级医学杂志首次发表通过自然语言处理（NLP）技术处理中文文本型电子病历（EHR）进行临床诊断的论文。

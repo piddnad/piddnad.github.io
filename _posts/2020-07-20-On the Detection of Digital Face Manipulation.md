@@ -4,6 +4,7 @@ title:  "Paper Reading: On the Detection of Digital Face Manipulation"
 date:   2020-07-20 18:30:00 +0800--
 categories: [论文]
 tags: [Paper, Deep Learning, Facial Forgery Detection]
+published: false
 ---
 
 On the Detection of Digital Face Manipulation
