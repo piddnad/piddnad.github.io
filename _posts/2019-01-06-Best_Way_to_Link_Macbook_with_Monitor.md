@@ -1,10 +1,14 @@
 ---
 layout: post
 title:  "MacBook Pro 外接2K显示屏的最佳显示方案"
+title_en: "Getting HiDPI on a 2K External Monitor with MacBook Pro"
+description_en: "macOS only enables HiDPI by default on 4K+ displays. Here's how to manually enable it on a 2K monitor for crisp, Retina-quality output."
 date:   2019-01-06
 categories: [教程]
 tags: [Tutorial, Mac, Dell]
 ---
+
+<div data-lang-block="zh" markdown="1">
 
 最近，考虑为我的 MacBook Pro 购入一款外接显示器。
 
@@ -78,7 +82,7 @@ https://comsysto.github.io/Display-Override-PropertyList-File-Parser-and-Generat
 ### Step 4
 这一步由于需要往系统文件夹写入文件，所以必须先禁用系统完整性保护（System Integrity Protection），步骤如下：
 1. 重启 Mac，启动时按住 Command + R，进入 Recovery 模式。
-2. 当出现 *MacOS Utilities”/“OS X Utilities* 屏幕时，按下屏幕顶部的 *Utilities* 菜单，然后选择 *Terminal*。
+2. 当出现 *MacOS Utilities"/"OS X Utilities* 屏幕时，按下屏幕顶部的 *Utilities* 菜单，然后选择 *Terminal*。
 3. 输入命令 `$ csrutil disable; reboot` 。
 
 Mac 自动重启后，在 Terminal 输入如下命令，将 plist 文件拷贝至系统目录。
@@ -114,4 +118,110 @@ $ sudo cp ~/Downloads/DisplayProductID-xxxx.plist /System/Library/Displays/Conte
 3. https://comsysto.github.io/Display-Override-PropertyList-File-Parser-and-Generator-with-HiDPI-Support-For-Scaled-Resolutions/
 4. http://osxdaily.com/2015/10/05/disable-rootless-system-integrity-protection-mac-os-x/
 
+</div>
 
+<div data-lang-block="en" style="display:none;" markdown="1">
+
+I recently picked up an external monitor for my MacBook Pro — a Dell P2418D, a 23.8" 2K display with a pivot stand, 99% sRGB coverage, and factory color calibration.
+
+> **A quick guide to Dell's monitor naming**
+>
+> Dell's product lines are U/P/S/E, standing for Ultimate/Professional/Standard/Entry. The four digits that follow encode size (first two) and release year (last two). The trailing letter indicates resolution: K/Q/D/H = 8K/4K/2K/1080p.
+> My P2418D: P-series, 24", released in 2018, 2K.
+
+It arrived in a day and lit up perfectly. But something felt off: at 2560×1440, text looked **slightly blurry and soft**, and despite the larger screen, **everything was tiny** at native resolution.
+
+## Why does text look blurry on an external monitor?
+
+The root cause is HiDPI — or the lack of it.
+
+Apple introduced Retina displays with the iPhone 4 in 2010, and has since brought it to iPads, MacBooks, and iMacs. The idea: at typical viewing distances, pixels become invisible, making content look smooth and sharp. Retina achieves this through two things: high PPI hardware, and a software rendering mode called HiDPI.
+
+![Non-Retina vs Retina at WWDC 2010](/imgs/20190106/1.jpg)
+
+HiDPI renders each logical pixel using 4× the actual pixels, keeping UI elements the same physical size while making them dramatically crisper.
+
+In short: **high PPI (hardware) + HiDPI rendering (software) = Retina display quality**.
+
+The problem: **macOS only enables HiDPI by default on 4K and above**. On a 2K monitor, you have to turn it on manually.
+
+## How to enable HiDPI on a 2K external monitor
+
+The overall approach is to write a custom plist override file to:
+```
+/System/Library/Displays/Contents/Resources/Overrides/DisplayVendorID-xxxx/DisplayProductID-xxxx
+```
+
+### Step 1
+
+Enable HiDPI mode system-wide:
+
+```
+$ sudo defaults write /Library/Preferences/com.apple.windowserver.plist DisplayResolutionEnabled -bool true
+```
+
+### Step 2
+
+Connect your monitor and get its identifiers:
+
+```
+$ ioreg -lw0 | grep IODisplayPrefsKey
+```
+
+This lists all connected displays. `AppleBacklightDisplay` is the internal display; `AppleDisplay` is external. My output looked like:
+
+```
+"IODisplayPrefsKey" = "IOService:/...AppleBacklightDisplay-610-a03e"
+"IODisplayPrefsKey" = "IOService:/...AppleDisplay-10ac-d0c1"
+```
+
+The last segment of the external display line gives you `DisplayVendorId` (`10ac`) and `DisplayProductID` (`d0c1`). Note these down.
+
+### Step 3
+
+Generate a custom plist file using this web tool:
+
+```
+https://comsysto.github.io/Display-Override-PropertyList-File-Parser-and-Generator-with-HiDPI-Support-For-Scaled-Resolutions/
+```
+
+Enter your `DisplayProductID` and `DisplayVendorId`, configure your desired resolutions, and download the generated plist file.
+
+### Step 4
+
+Writing to system directories requires disabling System Integrity Protection (SIP):
+
+1. Restart your Mac and hold **Command + R** at boot to enter Recovery Mode.
+2. From the Utilities menu, open **Terminal**.
+3. Run `csrutil disable; reboot`.
+
+After reboot, copy the plist to the system directory (replace `xxxx` with your display's values):
+
+```
+$ sudo cp ~/Downloads/DisplayProductID-xxxx.plist /System/Library/Displays/Contents/Resources/Overrides/DisplayVendorID-xxxx/DisplayProductID-xxxx
+```
+
+> **2020.10 update:** If the copy fails, try running [one-key-hidpi](https://github.com/xzhih/one-key-hidpi/blob/master/README-zh.md), select option 2, then exit. It handles the file placement for you.
+> Quick run: `bash -c "$(curl -fsSL https://raw.githubusercontent.com/xzhih/one-key-hidpi/master/hidpi.sh)"`
+
+Re-enable SIP afterward with `csrutil enable` (same Recovery Mode process).
+
+### Step 5
+
+Restart. You can now select your custom resolutions.
+
+Install [RDM](https://github.com/avibrazil/RDM), an open-source resolution switcher, to conveniently switch between them from the menu bar.
+
+![Resolution switching with RDM](/imgs/20190106/2.jpg){:width="40%"}
+
+## Result
+
+My P2418D at 2560×1440 with HiDPI enabled effectively renders at 1920×1080 logical resolution — each pixel expressed with 1.3× the physical pixels. The improvement in text sharpness is striking. Highly worth the setup effort.
+
+## References
+1. https://zhuanlan.zhihu.com/p/20684620
+2. https://www.jianshu.com/p/4ea389848679
+3. https://comsysto.github.io/Display-Override-PropertyList-File-Parser-and-Generator-with-HiDPI-Support-For-Scaled-Resolutions/
+4. http://osxdaily.com/2015/10/05/disable-rootless-system-integrity-protection-mac-os-x/
+
+</div>

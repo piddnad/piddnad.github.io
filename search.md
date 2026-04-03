@@ -25,12 +25,9 @@ permalink: /search
       <li>
       <span class="date">{{ post.date | date: "%Y/%m/%d" }}</span>
       <a href="{{ post.url | prepend: site.baseurl }}">
-      {% if post.title %}
-  		{{ post.title }}
-  	  {% else %}
-  		{{ site.page_no_title }}
-  	  {% endif %}
-  	  </a>
+        <span data-lang-block="zh">{% if post.title %}{{ post.title }}{% else %}{{ site.page_no_title }}{% endif %}</span>
+        <span data-lang-block="en" style="display:none;">{% if post.title_en %}{{ post.title_en }}{% elsif post.title %}{{ post.title }}{% else %}{{ site.page_no_title }}{% endif %}</span>
+      </a>
   	</li>
     </ul>
   {% endfor %}
@@ -40,9 +37,12 @@ permalink: /search
 <script>
   window.onload=function() {
     var items = $('.post-archive a');
+    var lang = (document.body && document.body.getAttribute('data-lang')) || 'zh';
     for (var i=0; i<items.length; i++) {
       var item = items[i];
-      if (item.text.toLowerCase().indexOf(key.toLowerCase()) == -1) {
+      var span = item.querySelector('[data-lang-block="' + lang + '"]');
+      var text = span ? span.textContent : item.textContent;
+      if (text.toLowerCase().indexOf(key.toLowerCase()) == -1) {
         $(item.parentElement.parentElement).remove();
       } else {
         $(item.parentElement.parentElement).show();

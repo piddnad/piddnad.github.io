@@ -8,17 +8,24 @@ layout: base
   <h2 class="post-title">
   	<a href="{{ post.url | prepend: site.baseurl }}">
   	{% if post.title %}
-  		{{ post.title }}
+  		<span data-lang-block="zh">{{ post.title }}</span>
+  		<span data-lang-block="en" style="display:none;">{{ post.title_en | default: post.title }}</span>
   	{% else %}
   		{{ site.page_no_title }}
   	{% endif %}
   	</a>
   </h2>
-  
-  <div class="post-meta">{{ post.date | date: "%Y/%m/%d" }}</div>
-  
-  
-  <div class="post-content">{{ post.content | strip_html | truncate:160 }}</div>
+
+  <div class="post-meta">
+    <span data-lang-block="zh">{{ post.date | date: "%Y/%m/%d" }}</span>
+    <span data-lang-block="en" style="display:none;">{{ post.date | date: "%b %-d, %Y" }}</span>
+  </div>
+
+
+  <div class="post-content">
+    <span data-lang-block="zh">{{ post.content | strip_html | truncate:160 }}</span>
+    <span data-lang-block="en" style="display:none;">{{ post.description_en | default: post.content | strip_html | truncate:160 }}</span>
+  </div>
   
   <p class="readmore"><a href="{{ post.url | prepend: site.baseurl }}" data-i18n="read_more">阅读更多</a></p>
   

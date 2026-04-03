@@ -1,10 +1,14 @@
 ---
 layout: post
 title:  "VPS 搭建个人博客之傻瓜教程"
+title_en: "A Beginner's Guide to Self-Hosting a Blog on a VPS"
+description_en: "Step-by-step: domain setup, LNMP stack install, WordPress deployment on a VPS. Written after a hacker wiped my database."
 date:   2019-01-17
 categories: [教程]
 tags: [Tutorial, Blog, Linux]
 ---
+
+<div data-lang-block="zh" markdown="1">
 
 ## 0 前言
 之所以会写这篇教程，是因为发生了黑客攻击我的博客并删除数据库的事件，导致我一怒之下直接重装了服务器的系统。。。
@@ -27,15 +31,15 @@ tags: [Tutorial, Blog, Linux]
 
 本教程以阿里云为例：
 
-首先登录阿里云，进入“控制台”，进入菜单“域名”-“域名列表”。
+首先登录阿里云，进入"控制台"，进入菜单"域名"-"域名列表"。
 
 ![](https://ws3.sinaimg.cn/large/006tKfTcly1g0vt3z6xy1j31te0gyjwc.jpg)
 
-这里列出了你持有的全部域名，找到你想要解析的域名，在右边的“操作”中选择“解析”。
+这里列出了你持有的全部域名，找到你想要解析的域名，在右边的"操作"中选择"解析"。
 
 ![](https://ws2.sinaimg.cn/large/006tKfTcly1g0vt44r4p9j31ti0k8wkf.jpg)
 
-进入解析设置界面，按照上图添加两条记录，“记录值”字段填写你的 VPS 的 IP 地址。
+进入解析设置界面，按照上图添加两条记录，"记录值"字段填写你的 VPS 的 IP 地址。
 
 这样，域名解析就配置完成了。你可以使用自己的电脑 ping 一下刚才解析的域名，若正确无误，应该可以 ping 通。
 
@@ -58,7 +62,7 @@ tags: [Tutorial, Blog, Linux]
     * 指定端口连接 ``ssh -p 端口号 root@ip``
 * 对于 Windows 用户，需要使用别的方式，我推荐一个 Chrome App：[Secure Shell](http://link.zhihu.com/?target=https%3A//chrome.google.com/webstore/detail/secure-shell/pnhechapfaindjhompbnflcldabbghjo%3Futm_source%3Dchrome-app-launcher-info-dialog)，当然，你也可以安装别的 ssh 工具例如 [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/) 等。
 
-成功登录后，创建一个名为 “lnmp” 的 screen 会话：
+成功登录后，创建一个名为 "lnmp" 的 screen 会话：
 
 ```
 screen -S lnmp
@@ -185,7 +189,7 @@ chown -R www /home/wwwroot
 
 ![](https://ws3.sinaimg.cn/large/006tKfTcly1g0vt5r95stj316x0u0q8b.jpg)
 
-然后将进行“著名的WordPress五分钟安装程序”，最后，大功告成！
+然后将进行"著名的WordPress五分钟安装程序"，最后，大功告成！
 
 ## 6 其他优化
 ### 6.1 添加IP访问
@@ -213,4 +217,133 @@ vi /usr/local/nginx/conf/nginx.conf
 2. https://lnmp.org/install.html
 3. https://blog.csdn.net/junlon2006/article/details/77854898
 
+</div>
 
+<div data-lang-block="en" style="display:none;" markdown="1">
+
+## 0 Preface
+
+The reason I wrote this guide: a hacker broke into my blog and deleted the entire database. In a fit of rage, I wiped and reinstalled the server from scratch.
+
+My sincerest regards to that hacker:
+
+![](/imgs/20190117/1.jpg)
+
+## 1 What You Need
+
+To host your own blog, you need just three things:
+
+* A VPS or dedicated server (providers include [BandwagonHost](https://bwh1.net/index.php), [DigitalOcean](https://www.digitalocean.com/), [Linode](https://www.linode.com/), etc.)
+* A domain name (registrars like Namecheap or GoDaddy work fine)
+* Curiosity and a willingness to run some commands
+
+Let's get started.
+
+## 2 DNS Setup
+
+> In short: DNS maps your domain name to your VPS's IP address.
+
+Log in to your domain registrar's control panel and find the DNS settings for your domain. Add two records — typically an `A` record for the root domain and one for `www` — both pointing to your VPS's IP address.
+
+Once saved, verify with:
+
+```
+ping yourdomain.com
+```
+
+If the ping resolves to your VPS IP, DNS is working.
+
+## 3 Installing the LNMP Stack
+
+> LNMP = Linux + Nginx + MySQL + PHP. It's a one-click installer that sets up a complete web server environment on CentOS/Debian.
+
+All remaining steps happen on the VPS. Connect via SSH:
+
+* **macOS/Linux:** `ssh root@your.ip` (default port 22), or `ssh -p PORT root@your.ip` for a custom port
+* **Windows:** Use [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/) or the Chrome [Secure Shell](https://chrome.google.com/webstore/detail/secure-shell/pnhechapfaindjhompbnflcldabbghjo) extension
+
+Once logged in, create a screen session so the install survives disconnection:
+
+```
+screen -S lnmp
+```
+
+Download and run the installer:
+
+```
+wget http://soft.vpser.net/lnmp/lnmp1.5.tar.gz -cO lnmp1.5.tar.gz && tar zxf lnmp1.5.tar.gz && cd lnmp1.5 && ./install.sh lnmp
+```
+
+The installer will prompt you for:
+
+- **MySQL version** — Note: MySQL 5.6, 5.7, and MariaDB 10 require at least 1GB RAM.
+- **MySQL root password** — choose a strong one and remember it.
+- **InnoDB** — keep it enabled (default).
+- **PHP version** — make sure it's compatible with your app.
+- **Memory allocator** (TCMalloc / Jemalloc / none) — TCMalloc is from Google (used in Chrome/Safari); Jemalloc from Facebook (used in Firefox). Either is fine.
+
+Installation takes anywhere from a few minutes to a couple hours. When you see `Install lnmp V1.5 completed! enjoy it.`, you're done.
+
+## 4 Adding a Virtual Host
+
+```
+lnmp vhost add
+```
+
+Follow the prompts:
+- Enter your domain (add both `yourdomain.com` and `www.yourdomain.com` — they're treated as different hosts).
+- Accept the default web root directory (just press Enter).
+- Skip URL rewrite and logging if you don't need them.
+- When asked about a database, enter `y`, provide your MySQL root password, then set a database name and user password.
+- Add an SSL certificate — choose option 2 to auto-provision a free certificate.
+
+## 5 Installing WordPress
+
+Navigate to your site's web root:
+
+```
+cd /home/wwwroot/www.yourdomain.com
+```
+
+Download and unpack WordPress:
+
+```
+wget http://wordpress.org/latest.tar.gz
+tar -xzvf latest.tar.gz
+mv wordpress/* .
+rm -rf wordpress latest.tar.gz
+```
+
+Fix file permissions:
+
+```
+chmod -R 755 /home/wwwroot
+chown -R www /home/wwwroot
+```
+
+## 6 Finishing Up in the Browser
+
+Open your domain in a browser. WordPress's setup wizard will appear — enter the database name, username, and password you created earlier. Run through the famous "five-minute install" and you're live.
+
+## 7 Bonus: Fix Direct IP Access
+
+Visiting your VPS's raw IP in a browser shows the LNMP default page instead of your site. To fix this, redirect IP traffic to your domain in the Nginx config:
+
+```
+vi /usr/local/nginx/conf/nginx.conf
+```
+
+Find the `server` block and update the `root` directive to point to your site's web root.
+
+## Afterword
+
+There's plenty more to do — set up a firewall, adjust swap space, enable fail2ban, etc. I'll write about those separately.
+
+Thanks to Simonyy ([blog](http://www.simonyy.com/)) for the help and inspiration when I first set this up.
+
+## References
+1. https://www.simonyy.com/2018/10/13/ru-keng-ling-ji-chu-da-jian-si-ren-bo-ke-jia-jian/#toc_8
+2. https://lnmp.org/install.html
+3. https://blog.csdn.net/junlon2006/article/details/77854898
+
+</div>

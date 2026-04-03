@@ -1,11 +1,14 @@
 ---
 layout: post
 title:  "Scrapy小练习之新闻爬虫"
+title_en: "Scrapy Practice: Building a News Crawler"
+description_en: "Building a news crawler with Scrapy — from basic CrawlSpider setup to reverse-engineering a news API when JavaScript-rendered pages block static scraping."
 date:   2019-07-10
 categories: [教程]
 tags: [Tutorial, Python, Scrapy]
 ---
 
+<div data-lang-block="zh" markdown="1">
 
 ## 写在前面
 
@@ -21,7 +24,7 @@ tags: [Tutorial, Python, Scrapy]
 
 当我们上网时，浏览的网页上有很多形形色色的信息，我们可以手动收集（复制粘贴or下载）我们需要的信息。但是，当信息量比较多就显得很麻烦了，有没有一种方式可以自动且快捷地把一堆相关网页上的海量信息下载下来呢？有，那就是网络爬虫。
 
-网络爬虫是一种从 Web 上自动下载网页的程序——网络爬虫把一个或多个“种子网页”作为输入，然后经过下载、分析和扫描等处理过程来获取新链接。对于指向未下载网页的链接，将它们加到一个中央 URL 队列中。然后，从队列中选择一个新的网页进行下载……如此往复，就像蛛网一样访问并下载到所有延伸的网页，在这个过程中，分析并提取网页中有用的数据，以结构化的方式存储。
+网络爬虫是一种从 Web 上自动下载网页的程序——网络爬虫把一个或多个"种子网页"作为输入，然后经过下载、分析和扫描等处理过程来获取新链接。对于指向未下载网页的链接，将它们加到一个中央 URL 队列中。然后，从队列中选择一个新的网页进行下载……如此往复，就像蛛网一样访问并下载到所有延伸的网页，在这个过程中，分析并提取网页中有用的数据，以结构化的方式存储。
 
 事实上，所有我们所知的主要的搜索引擎（百度、Google...）都使用爬虫，有效的网络爬虫是现代搜索引擎取得成功的关键。
 
@@ -399,7 +402,7 @@ class NewplusSpider(scrapy.Spider):
 
 这几天沉迷爬虫，之后的博客将会尝试一下爬取网页上的图片，敬请期待~
 
-> “最近对很多网络相关的技术产生了兴趣，例如 SSR，网络爬虫等等。但因为大二时没有好好听蒋砚军老师讲的计算机网络课，所以现在对一些协议方面的细节还是很模糊，真的好后悔呀！暑假快开始了，这个假期要好好恶补一下计网相关的知识。”
+> "最近对很多网络相关的技术产生了兴趣，例如 SSR，网络爬虫等等。但因为大二时没有好好听蒋砚军老师讲的计算机网络课，所以现在对一些协议方面的细节还是很模糊，真的好后悔呀！暑假快开始了，这个假期要好好恶补一下计网相关的知识。"
 
 ### 参考资料
 
@@ -407,3 +410,296 @@ class NewplusSpider(scrapy.Spider):
 2. <http://www.demodashi.com/demo/13933.html>
 3. <https://scrapy-chs.readthedocs.io/zh_CN/stable/intro/tutorial.html>
 4. <https://github.com/MrLiuBee/IREngine>
+
+</div>
+
+<div data-lang-block="en" style="display:none;" markdown="1">
+
+## Preface
+
+A summer school course required me to scrape text data from the web, which gave me a good excuse to revisit Python web scraping with Scrapy — a framework I'd used before but hadn't touched in a while.
+
+## 1 Review
+
+### What is a Web Crawler?
+
+When you browse the web, there's a lot of information on pages that you could collect manually — copy-paste, download, etc. But when the volume is large, doing this by hand is impractical. Web crawlers automate this.
+
+A web crawler takes one or more seed URLs, downloads those pages, extracts new links, adds them to a central URL queue, and repeats — crawling outward like a spider web, downloading and extracting structured data along the way.
+
+All major search engines (Google, Baidu, etc.) use crawlers. Effective crawling is a core part of why modern search works.
+
+### What is Scrapy?
+
+Scrapy is a Python framework for fast, structured web scraping. Compared to writing a crawler from scratch with `requests` + `BeautifulSoup`, Scrapy provides a complete architecture: request scheduling, middleware, concurrency, output pipelines, and more — allowing you to tackle much more complex scraping tasks cleanly.
+
+### Scrapy Architecture Overview
+
+![Scrapy architecture](/imgs/20190710/1.png)
+
+The green arrows show data flow, controlled by the central Scrapy Engine:
+
+1. The **Scheduler** sends the first URL through the **Downloader Middleware** to the **Downloader**.
+2. After downloading, the **Downloader** passes the Response (via middleware) to the **Spider**, which processes it.
+3. The Spider produces two types of output: new **Requests** (links to follow, sent back to the Scheduler) and extracted **Items** (sent to the **Item Pipeline** for storage).
+4. Repeat until the Scheduler has no more requests.
+
+## 2 Practice: News Crawler
+
+### Defining the Goal
+
+Target: scrape tech news from NetEase (tech.163.com). For each article, collect:
+
+- Title
+- Publish date
+- Source
+- Content
+- URL
+
+### Creating the Project
+
+```
+scrapy startproject NewsSpider
+cd NewsSpider
+scrapy genspider technews tech.163.com
+```
+
+Project structure:
+
+![](/imgs/20190710/2.png){:width="40%"}
+
+### Defining Items
+
+Items are containers for scraped data, used like Python dicts. In `items.py`:
+
+```python
+import scrapy
+
+class NewsspiderItem(scrapy.Item):
+    title = scrapy.Field()
+    date = scrapy.Field()
+    source = scrapy.Field()
+    content = scrapy.Field()
+    url = scrapy.Field()
+```
+
+### Writing the Spider
+
+Spiders define how to crawl and parse pages. We extend `CrawlSpider`, which adds a rule-based link-following mechanism on top of the base Spider class.
+
+```python
+class TechnewsSpider(CrawlSpider):
+    name = 'technews'
+    allowed_domains = ['tech.163.com']
+    start_urls = ['https://tech.163.com/']
+
+    rules = [
+        Rule(LinkExtractor(
+            allow=(
+                ('https://tech\.163\.com/[0-9]+/.*$')
+            ),
+        ),
+        callback="parse_item",
+        follow=True)
+    ]
+```
+
+The three rule components:
+- `link_extractor` — defines which links to follow from each page.
+- `callback` — the function called for each matched URL; receives a Response and returns Items and/or more Requests.
+- `follow` — whether to recursively follow links extracted by this rule.
+
+The `parse_item` function extracts the fields:
+- **title**: in the `<h1>` tag.
+- **date**: in a div with class `post_time_source`, needs regex to extract the datetime portion.
+- **source**: in an `<a>` tag with id `ne_article_source`.
+- **content**: inside `<p>` tags within a div with id `endText`; use `p[not(@class)]` to filter out non-content paragraphs, then join them.
+- **url**: directly from `response.url`.
+
+```python
+def parse_item(self, response):
+    item = NewsspiderItem()
+    item['title'] = response.xpath("//h1/text()").extract()
+    item['date'] = response.xpath("//div[@class='post_time_source']/text()").re(
+        r'[0-9]*-[0-9]*-[0-9]* [0-9]*:[0-9]*:[0-9]*')
+    item['source'] = response.xpath("//a[@id='ne_article_source']/text()").extract()
+    item['content'] = ''.join(response.xpath("//div[@id='endText']/p[not(@class)]/text()").extract())
+    item['url'] = response.url
+    yield item
+```
+
+### Settings
+
+```python
+BOT_NAME = 'NewsSpider'
+SPIDER_MODULES = ['NewsSpider.spiders']
+NEWSPIDER_MODULE = 'NewsSpider.spiders'
+
+ROBOTSTXT_OBEY = True
+COOKIES_ENABLED = False         # Disable cookies to reduce ban risk
+FEED_EXPORT_ENCODING = 'utf-8'
+FEED_EXPORT_FIELDS = ["title", "date", "source", "content", "url"]
+DOWNLOAD_DELAY = 0.01           # Be polite to the server
+CLOSESPIDER_ITEMCOUNT = 1000    # Stop after 1000 articles
+```
+
+### Result
+
+```
+scrapy crawl technews -o news.csv -t csv
+```
+
+Articles saved to CSV successfully.
+
+![](/imgs/20190710/3.png)
+
+## 3 Going Further: Hitting the Limit
+
+There was a problem: I wanted ~1000 articles, but the crawler consistently stopped around 80.
+
+My first guess was server-side anti-bot blocking. But tweaking `USER_AGENT`, `COOKIES_ENABLED`, and `ROBOTSTXT_OBEY` changed nothing. That wasn't it.
+
+After some research, I found the real cause: **NetEase loads its news list dynamically via JavaScript**. Scrapy only processes static HTML, so it could only see the ~80 articles present in the initial HTML — the rest are loaded client-side and never seen by Scrapy.
+
+Three approaches to fix this:
+
+1. **Find static archive pages** and scrape those instead.
+2. **Reverse-engineer the news API** and call it directly.
+3. **Use a JS-rendering tool** like Splash to process dynamic pages.
+
+I tried options 1 and 2. For option 3, see [this guide](https://www.cnblogs.com/518894-lu/p/9067208.html#_label2).
+
+### Option 1: Static Archive Pages (Brute Force)
+
+NetEase has some historical archive pages with static article lists. Not elegant, but it works.
+
+```python
+class TechnewsSpider(CrawlSpider):
+    name = 'technews'
+    allowed_domains = ['163.com']
+    start_urls = [
+        'https://news.163.com',
+        'http://tech.163.com/special/gd2016/',
+        'http://tech.163.com/special/tele_2016_02/',
+        'http://tech.163.com/special/it_2016_02/',
+        'http://tech.163.com/special/internet_2016_02/',
+        'http://digi.163.com/news/',
+        'https://mobile.163.com/',
+    ]
+
+    rules = [
+        Rule(
+            LinkExtractor(allow=(
+                'tech\.163\.com/[0-9]+/.*$',
+                'news\.163\.com/[0-9]+/.*$',
+                'digi\.163\.com/[0-9]+/.*$',
+                'mobile\.163\.com/[0-9]+/.*$',
+                'tech\.163\.com/special/gd2016.*$',
+                'tech\.163\.com/special/tele_2016.*$',
+                'tech\.163\.com/special/it_2016.*$',
+                'tech\.163\.com/special/internet_2016.*$',
+                'digi\.163\.com/special/.*$',
+            )),
+            callback="parse_item",
+            follow=True
+        )
+    ]
+
+    def parse_item(self, response):
+        item = NewsspiderItem()
+        if 'special' not in response.url:
+            item['title'] = response.xpath("//h1/text()").extract()
+            item['date'] = response.xpath("//div[@class='post_time_source']/text()").re(
+                r'[0-9]*-[0-9]*-[0-9]* [0-9]*:[0-9]*:[0-9]*')
+            item['source'] = response.xpath("//a[@id='ne_article_source']/text()").extract()
+            item['content'] = ''.join(response.xpath("//div[@id='endText']/p[not(@class)]/text()").extract()).replace('\n', '')
+            item['url'] = response.url
+        yield item
+```
+
+This grabbed over 1800 articles.
+
+### Option 2: Reverse-Engineering the News API (The Right Way)
+
+Using Chrome DevTools to monitor network traffic while loading the news list, I found a request to:
+
+```
+https://temp.163.com/special/00804KVA/cm_yaowen_03.js?callback=data_callback
+```
+
+![](/imgs/20190710/4.png)
+
+The response is a JSON array of news items.
+
+![](/imgs/20190710/5.png){:width="40%"}
+
+The URL pattern is clear: `cm_yaowen` is the category, `03` is the page number. The URL template:
+
+```
+http://temp.163.com/special/00804KVA/{category}_{page}.js?callback=data_callback
+```
+
+Categories include: `cm_yaowen` (top news), `cm_guonei` (domestic), `cm_tech` (tech), etc.
+
+```python
+class NewsxApiSpider(scrapy.Spider):
+    name = 'newsxapi'
+    allowed_domains = ['163.com']
+
+    start_news_category = ["guonei", "guoji", "yaowen", "shehui", "war", "money",
+                           "tech", "sports", "ent", "auto", "jiaoyu", "jiankang", "hangkong"]
+    news_url_head = "http://temp.163.com/special/00804KVA/"
+    news_url_tail = ".js?callback=data_callback"
+
+    def start_requests(self):
+        for category in self.start_news_category:
+            category_item = "cm_" + category
+            for count in range(1, 20):
+                if count == 1:
+                    start_url = self.news_url_head + category_item + self.news_url_tail
+                else:
+                    start_url = self.news_url_head + category_item + "_0" + self.news_url_tail
+                yield scrapy.Request(start_url, meta={"category": category}, callback=self.parse_news_list)
+
+    def parse_news_list(self, response):
+        json_array = "".join(response.text[14:-1].split())  # strip "data_callback(...)"
+        news_array = json.loads(json_array)
+        for row in enumerate(news_array):
+            news_item = NewsspiderItem()
+            news_item["url"] = row[1]["tlink"]
+            yield scrapy.Request(news_item["url"], meta={"news_item": news_item},
+                                 callback=self.parse_news_content)
+
+    def parse_news_content(self, response):
+        content_list = []
+        for data_row in response.xpath("//div[@id='endText']/p/text()").extract():
+            content_list.append("".join(data_row.split()))
+        news_item = response.meta['news_item']
+        news_item["content"] = '"'.join(content_list)
+        news_item["source"] = response.xpath("//a[@id='ne_article_source']/text()").extract_first()
+        news_item['title'] = response.xpath("//h1/text()").extract()
+        news_item['date'] = response.xpath("//div[@class='post_time_source']/text()").re(
+            r'[0-9]*-[0-9]*-[0-9]* [0-9]*:[0-9]*:[0-9]*')
+        yield news_item
+```
+
+No manual page lists needed. This can run on a schedule to automatically collect large volumes of articles.
+
+**Bonus:** A [Zhihu answer](https://www.zhihu.com/question/26992971/answer/93124356) pointed out another NetEase endpoint at `http://news.163.com/special/0001220O/news_json.js` that returns a JSON dump of top news with titles and URLs. That opens up another approach entirely.
+
+## Afterword
+
+Web crawling and anti-crawling are an eternal arms race. As long as the web exists, so will crawlers — and so will the countermeasures against them.
+
+The crawlers in this post are fairly basic. Real-world scraping often requires dealing with CAPTCHAs, session management, rotating proxies, and more. This was a good starting point — I'll go deeper in future posts.
+
+> "I've been interested in a lot of network-related tech lately — SSR, web crawlers, etc. But because I didn't pay proper attention in the Computer Networks course back in sophomore year, the protocol-level details are still fuzzy. Summer break is coming — time to fill that gap."
+
+### References
+
+1. *Modern Information Retrieval*, China Machine Press
+2. http://www.demodashi.com/demo/13933.html
+3. https://scrapy-chs.readthedocs.io/zh_CN/stable/intro/tutorial.html
+4. https://github.com/MrLiuBee/IREngine
+
+</div>

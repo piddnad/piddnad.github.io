@@ -1,11 +1,14 @@
 ---
 layout: post
 title:  "Scrapy小练习之爬取妹子图"
+title_en: "Scrapy Practice: Building an Image Gallery Crawler"
+description_en: "A hands-on Scrapy tutorial crawling an image gallery site — defining Items, writing spider logic, implementing ImagesPipeline, handling hotlink protection, and a comparison with a raw requests/BeautifulSoup alternative."
 date:   2019-08-05
 categories: [教程]
 tags: [Tutorial, Python, Scrapy]
 ---
 
+<div data-lang-block="zh" markdown="1">
 
 ## 写在前面
 之前写了一篇 Scrapy 爬取网易新闻的博客，提到下次要尝试图片爬虫，于是，这篇博客诞生啦！（我怎么会鸽呢对不对）
@@ -123,7 +126,7 @@ class MeizispiderPipeline(ImagesPipeline):
 
 ## 4 其他重要事项
 ### 针对防盗链的策略
-> “若你的爬虫只能欺负一些没有反爬虫限制的网站，那你就像用枪指着手无寸铁的平民一样，算神马英雄？要欺负就欺负反爬虫网站！”——某教程
+> "若你的爬虫只能欺负一些没有反爬虫限制的网站，那你就像用枪指着手无寸铁的平民一样，算神马英雄？要欺负就欺负反爬虫网站！"——某教程
 
 经过上述步骤，我们的爬虫还是无法正确爬取到图片，为什么呢？这时由于，我们要爬的网站开启了防盗链技术。
 
@@ -191,7 +194,7 @@ def get_images(album_url, headers):
             response_page = requests.get(page_url, headers=headers)
             print(page_url)
             soup = BeautifulSoup(response_page.text, 'lxml')
-            print('正在下载图集“{}”的第{}/{}张图片'.format(album_name, i, int(page_num)))
+            print('正在下载图集"{}"的第{}/{}张图片'.format(album_name, i, int(page_num)))
             print(soup.select('.main-image p a img')[0].get('src'))
 
             if soup.select('.main-image p a img')[0].get('src'):
@@ -213,4 +216,206 @@ if __name__=='__main__':
         get_album_info(url, headers)
 ```
 
+</div>
 
+<div data-lang-block="en" style="display:none;" markdown="1">
+
+## Preface
+
+In a previous post I built a Scrapy crawler for NetEase News and promised to try an image crawler next — so here it is.
+
+Image crawling and text crawling are fundamentally the same: fetch a page → extract useful data → save and follow links. The only difference here is that the "useful data" we extract is image URLs instead of text. We also need to write an Item Pipeline to actually download and save the image files.
+
+## 1 Requirements & Defining Items
+
+The target site is mzitu.com, an image gallery site where photos are organized into albums — each album contains a set of thematically related images. We'll mirror this structure locally, saving each image at `root_folder/album_name/1.jpg`.
+
+We need three Item fields: the album name, the album URL (the first page of the album), and a list of image URLs within the album. `items.py`:
+
+```python
+import scrapy
+
+class MeizispiderItem(scrapy.Item):
+    name = scrapy.Field()
+    url = scrapy.Field()       # album URL
+    image_urls = scrapy.Field()  # list of individual image URLs
+    pass
+```
+
+## 2 Writing the Spider
+
+The spider starts at the homepage, navigates into each album's detail page, then collects individual image URLs.
+
+After inspecting the site, the URL pattern for images is: `https://www.mzitu.com/<album_id>/<image_number>`. So once we know how many images an album contains, we can construct all image page URLs directly.
+
+![Chrome DevTools inspection](/imgs/20190805/1.png)
+
+The overall flow:
+1. From the homepage, collect album URLs and names.
+2. On each album detail page, get the total image count and generate all per-image page URLs.
+3. On each image page, extract the actual image URL and yield the item.
+
+`spiders/mzitu.py`:
+
+```python
+import scrapy
+from MeiziSpider.items import MeizispiderItem
+
+class MzituSpider(scrapy.Spider):
+    name = 'mzitu'
+    allowed_domains = ['mzitu.com']
+    start_urls = ['https://www.mzitu.com/']
+    img_urls = []
+    first = True
+
+    def parse(self, response):
+        node_list = response.xpath("//ul[@id='pins']/li")
+        for node in node_list:
+            item = MeizispiderItem()
+            item['name'] = node.xpath('./span/a/text()').extract_first()
+            item['url'] = node.xpath('./span/a/@href').extract_first()
+            yield scrapy.Request(url=item['url'], callback=self.detail_page, meta={"item": item})
+
+    def detail_page(self, response):
+        item = response.meta["item"]
+        num = response.xpath('//div[@class="pagenavi"]/a[5]/span/text()').extract_first()
+        for i in range(1, int(num) + 1):
+            if i == 1:
+                yield scrapy.Request(url=item["url"], callback=self.parse_img_url, meta={"item": item}, dont_filter=True)
+            else:
+                yield scrapy.Request(url=item["url"] + '/' + str(i), callback=self.parse_img_url, meta={"item": item})
+        item['image_urls'] = self.img_urls
+
+    def parse_img_url(self, response):
+        item = response.meta["item"]
+        self.img_urls.append(response.xpath('//div[@class="main-image"]/p/a/img/@src').extract_first())
+        yield item
+```
+
+## 3 Writing the Item Pipeline
+
+After items are collected by the spider, they pass through the pipeline for processing. Here we use Scrapy's built-in `ImagesPipeline` to download and save the images.
+
+Reference: https://scrapy-chs.readthedocs.io/zh_CN/latest/topics/images.html
+
+We override three methods in `pipelines.py`:
+
+- **`file_path`**: called once per downloaded item; returns the local path to save the file.
+- **`get_media_requests`**: yields a `Request` for each image URL in `image_urls`; these are downloaded by the pipeline.
+- **`item_completed`**: called when all image downloads for an item finish (or fail); decides whether to pass or drop the item.
+
+```python
+import scrapy
+from scrapy.pipelines.images import ImagesPipeline
+from scrapy.exceptions import DropItem
+
+
+class MeizispiderPipeline(ImagesPipeline):
+
+    def get_media_requests(self, item, info):
+        for img_url in item['image_urls']:
+            referer = item['url']
+            yield scrapy.Request(img_url, meta={'item': item, 'referer': referer})
+
+    def item_completed(self, results, item, info):
+        image_paths = [x['path'] for ok, x in results if ok]
+        if not image_paths:
+            raise DropItem("Item contains no images")
+        return item
+
+    def file_path(self, request, response=None, info=None):
+        item = request.meta['item']
+        folder = item['name']
+        image_guid = request.url.split('/')[-1]
+        file_name = u'full/{0}/{1}'.format(folder, image_guid)
+        return file_name
+```
+
+## 4 Additional Considerations
+
+### Bypassing Hotlink Protection
+
+Even after the steps above, the crawler may fail to download images. The reason: the site uses **hotlink protection** — the server checks whether requests originate from its own domain before serving images. Requests from an external source are blocked.
+
+The fix: spoof the `Referer` header for every image request to make it look like it's coming from the site itself. Override `process_request` in `middlewares.py`:
+
+```python
+def process_request(self, request, spider):
+    # Bypass hotlink protection
+    referer = request.url
+    if referer:
+        request.headers['referer'] = referer
+```
+
+### Bypassing Anti-Crawling Measures
+
+Even with the correct referer, you may still see mass 403 responses — the server rate-limits or blocks automated requests.
+
+The simplest mitigation: throttle the crawler. Edit `settings.py` and tune `CONCURRENT_REQUESTS` and `DOWNLOAD_DELAY` appropriately.
+
+## 5 Afterword: Frameworks vs. No Framework
+
+For a task this simple, a framework may actually be overkill. As an experiment, I reimplemented the same crawler using just Python's `requests` and `BeautifulSoup` libraries in under 60 lines — and it does exactly the same thing.
+
+This raises a real question: is using a framework always better? Frameworks shine for large, long-lived projects where a unified structure and reusable components pay off. But for simple one-off scrapers, the overhead of Scrapy's project structure and abstraction layers can make things more complicated than necessary. Sometimes the cleaner code wins.
+
+Here's the no-framework version:
+
+```python
+import requests
+from bs4 import BeautifulSoup
+import os
+import time
+
+start_url = ['https://www.mzitu.com/']
+headers = {
+    'cookie': 'Hm_lvt_dbc355aef238b6c32b43eacbbf161c3c=1562490131,1562490132,1564906073; Hm_lpvt_dbc355aef238b6c32b43eacbbf161c3c=1564977351',
+    'referer': 'https://www.mzitu.com/185653',
+    'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36'
+}
+
+def get_album_info(url, headers):
+    response = requests.get(url, headers=headers)
+    soup = BeautifulSoup(response.text, 'lxml')
+    for i in soup.find_all(target='_blank'):
+        if i.select('img'):
+            album_url = i.get('href')
+            get_images(album_url, headers)
+            time.sleep(2)
+            print(album_url)
+    if soup.select('a.next.page-numbers')[0].get('href'):
+        next_url = soup.select('a.next.page-numbers')[0].get('href')
+        get_album_info(next_url, headers)
+
+def get_images(album_url, headers):
+    try:
+        response_album = requests.get(album_url, headers=headers)
+        soup_album = BeautifulSoup(response_album.text, 'lxml')
+        album_name = soup_album.select('h2')[0].get_text()
+        page_num = soup_album.select('body > div.main > div.content > div.pagenavi > a:nth-of-type(5) > span')[0].get_text()
+
+        for i in range(1, int(page_num) + 1):
+            page_url = album_url + '/' + str(i)
+            response_page = requests.get(page_url, headers=headers)
+            soup = BeautifulSoup(response_page.text, 'lxml')
+            print('Downloading image {}/{} of album "{}"'.format(i, int(page_num), album_name))
+
+            if soup.select('.main-image p a img')[0].get('src'):
+                img_url = soup.select('.main-image p a img')[0].get('src')
+                file_name = 'Mzitu/{}'.format(album_name)
+                if not os.path.exists(file_name):
+                    os.makedirs(file_name)
+
+                path = '%s/%s.jpg' % (file_name, i)
+                with open(path, 'wb+') as f:
+                    f.write(requests.get(img_url, headers=headers).content)
+                print(img_url)
+    except:
+        None
+
+if __name__ == '__main__':
+    for url in start_url:
+        get_album_info(url, headers)
+```
+
+</div>

@@ -26,7 +26,10 @@ permalink: /archives/
           <span data-lang-block="zh">{{ post.date | date: "%Y/%m/%d" }}</span>
           <span data-lang-block="en" style="display:none;">{{ post.date | date: "%B %e, %Y" }}</span>
         </span>
-        <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+        <a href="{{ post.url | prepend: site.baseurl }}">
+          <span data-lang-block="zh">{{ post.title }}</span>
+          <span data-lang-block="en" style="display:none;">{{ post.title_en | default: post.title }}</span>
+        </a>
       </li>
 
       {% if forloop.last %}

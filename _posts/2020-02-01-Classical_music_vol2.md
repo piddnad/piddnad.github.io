@@ -1,10 +1,14 @@
 ---
 layout: post
 title:  "2020.02.01 古典音乐推荐 Vol.2 "
+title_en: "Classical Music Picks Vol.2"
+description_en: "Three more pieces: Bach's Air on the G String, Chopin's Ballade No.1, and Mozart's Violin Sonata K.304 — each with a story behind it."
 date:   2020-02-01 13:25:00 +0800--
 categories: [音乐]
 tags: [Classical Music]
 ---
+
+<div data-lang-block="zh" markdown="1">
 
 ## 1. 巴赫「G弦上的咏叹调 BWV 1068」
 
@@ -46,6 +50,54 @@ tags: [Classical Music]
 
 这是一部很深情的作品，先了解一下这部作品的背景。
 
-“对于莫扎特来说，1778年无疑是他一生中最痛苦的一年。在宫廷中谋取职位的梦想一次次破灭，曾经人见人爱的“神童”现在处处碰壁，即使一向乐观的莫扎特也为此感到苦恼。此时母亲的逝世好比是晴天中的一道霹雳，让莫扎特感到无尽的孤独和哀伤，正是在这样的创作背景下，他写出了《e小调小提琴奏鸣曲》这样感人至深、催人泪下的作品。”
+"对于莫扎特来说，1778年无疑是他一生中最痛苦的一年。在宫廷中谋取职位的梦想一次次破灭，曾经人见人爱的"神童"现在处处碰壁，即使一向乐观的莫扎特也为此感到苦恼。此时母亲的逝世好比是晴天中的一道霹雳，让莫扎特感到无尽的孤独和哀伤，正是在这样的创作背景下，他写出了《e小调小提琴奏鸣曲》这样感人至深、催人泪下的作品。"
 
 虽然大家都说这是一部悲伤的作品，但对于我来说，感受到的更多的是美好和安静，小提琴的旋律非常优雅，仿佛置身于拉上窗帘的空荡荡的房间。
+
+</div>
+
+<div data-lang-block="en" style="display:none;" markdown="1">
+
+## 1. Bach — Air on the G String, BWV 1068
+
+**Orchestral Suite No. 3 in D Major, BWV 1068: "Air"**
+
+[Listen on NetEase Music](https://music.163.com/song?id=16409470)
+
+[Piano version, performed by Lang Lang](https://music.163.com/song?id=512613128)
+
+One of the most recognized pieces in the classical repertoire — you've almost certainly heard it in a film or TV show at some point.
+
+The *Air on the G String* is the second movement of Bach's Orchestral Suite No.3 in D major, originally composed between 1717 and 1723. The version we know today is an arrangement by the German violinist August Wilhelmj, made in the late 19th century. He transposed the piece from D major to C major and lowered the melody by an octave — which meant the solo violin could play the entire melody on its lowest string (the G string), giving the arrangement its name.
+
+The feeling this piece evokes in me, above all else, is **stillness**. There's a pure, poetic quality to the melody — almost something sacred in it. Perhaps that's what classical music at its best can do.
+
+## 2. Chopin — Ballade No.1 in G minor, Op.23
+
+**Chopin: Ballade No.1 in G minor, Op.23**
+
+[Listen on NetEase Music](https://music.163.com/song?id=32696188)
+
+*Update, 2020.07.09: Just finished watching* Your Lie in April. *Unexpected to hear Kousei play this again in the final competition — it hit differently this time.*
+
+> Original thoughts below~
+
+The opening melody is hushed and secretive. Then, without warning, the music erupts. The first time I heard it, I was napping — drifted off during the quiet opening, jolted awake by the explosion that followed.
+
+Learning the backstory made everything click. The piece was written while Chopin was in exile in France, following the failed Warsaw Uprising. It's widely believed to have been inspired by Adam Mickiewicz's epic poem *Konrad Wallenrod* — the story of a Lithuanian man captured by Germanic crusaders as a child, raised in enemy hands, then secretly awoken to his homeland by an old Lithuanian man in disguise, eventually sacrificing himself to free his people.
+
+Listening to this ballade is like hearing that old man tell the story at your side, while an enormous epic unfolds slowly before you. Every dramatic turn in the narrative has its counterpart in the music.
+
+## 3. Mozart — Violin Sonata in E minor, K.304: II. Tempo di minuetto
+
+**Mozart: Sonata For Piano And Violin In E Minor, K.304: II. Tempo di minuetto**
+
+[Listen on NetEase Music](https://music.163.com/song?id=36947011)
+
+A deeply tender piece — and knowing its background helps explain why.
+
+1778 was the most painful year of Mozart's life. His efforts to secure a court position kept failing; the beloved child prodigy was now being turned away everywhere. Even Mozart's characteristic optimism was worn down. Then his mother died suddenly — and in that grief and isolation, he wrote the Violin Sonata in E minor.
+
+Everyone calls this a sad piece, and I understand why. But what I feel listening to it is less sadness and more a kind of beauty and quiet — the violin melody is so elegant, like sitting alone in a room with the curtains drawn, the world going still.
+
+</div>

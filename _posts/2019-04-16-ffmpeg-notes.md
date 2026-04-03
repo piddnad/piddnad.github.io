@@ -1,19 +1,23 @@
 ---
 layout: post
 title:  "ffmpeg 使用笔记"
+title_en: "ffmpeg Notes"
+description_en: "A practical guide to ffmpeg — extracting frames from video and clipping clips, with real examples from my own workflow."
 date:   2019-04-16
 categories: [技术]
 tags: [Tutorial, Linux]
 ---
 
+<div data-lang-block="zh" markdown="1">
+
 因为毕设涉及到截取视频帧这一操作，因此（在学长的推荐下）接触并使用了 [ffmpeg](https://ffmpeg.org/ffmpeg.html) 这个转码视频的强大工具。
 
 ## 1 What is ffmpeg?
-ffmpeg 是一个非常有用的命令行程序，用于快速转码媒体文件。它是领先的多媒体框架 FFmpeg 的一部分，后者在其[官网](https://ffmpeg.org/)是这么介绍的：“（FFmpeg）能够解码、编码、转码、混流、分离、流化、过滤和播放几乎所有的人和机器创建的媒体文件，支持从最晦涩古老至前沿的各种格式，还具有高度可移植性，可以在各种构建环境，机器架构和配置下使用。”
+ffmpeg 是一个非常有用的命令行程序，用于快速转码媒体文件。它是领先的多媒体框架 FFmpeg 的一部分，后者在其[官网](https://ffmpeg.org/)是这么介绍的："（FFmpeg）能够解码、编码、转码、混流、分离、流化、过滤和播放几乎所有的人和机器创建的媒体文件，支持从最晦涩古老至前沿的各种格式，还具有高度可移植性，可以在各种构建环境，机器架构和配置下使用。"
 
 > 注意，ffmpeg 和 FFmpeg 不是同一个东西。FFmpeg 是框架，而 ffmpeg 是一个其中的一个功能。
 
-具体来说，ffmpeg命令读取由 -i 选项指定的任意数量的输入“文件”（可以是常规文件，管道，网络流，抓取设备等），并写入任意数量的由普通输出URL指定的输出“文件”。 其处理流程可描述如下图：
+具体来说，ffmpeg命令读取由 -i 选项指定的任意数量的输入"文件"（可以是常规文件，管道，网络流，抓取设备等），并写入任意数量的由普通输出URL指定的输出"文件"。 其处理流程可描述如下图：
 
 ```
  _______              ______________
@@ -91,4 +95,97 @@ ffmpeg -ss 1:01:13 -t 20 -i 2.mp4 temp.mp4
 ## 后记
 关于 ffmpeg 的更多用法和资料，可以参考其[官方网站](https://ffmpeg.org/ffmpeg.html)（本文的大部分内容也参考于此）。
 
+</div>
 
+<div data-lang-block="en" style="display:none;" markdown="1">
+
+My undergraduate thesis involved extracting frames from video, which led me to [ffmpeg](https://ffmpeg.org/ffmpeg.html) — a remarkably powerful command-line tool for media transcoding.
+
+## 1 What is ffmpeg?
+
+ffmpeg is a command-line program for fast media file transcoding. It's part of the FFmpeg multimedia framework, which its [official site](https://ffmpeg.org/) describes as capable of decoding, encoding, transcoding, muxing, demuxing, streaming, filtering, and playing almost any media format ever created — from the most obscure legacy formats to the cutting edge — with high portability across build environments and architectures.
+
+> Note: ffmpeg (lowercase) and FFmpeg are not the same thing. FFmpeg is the framework; ffmpeg is one of its tools.
+
+The ffmpeg command reads from any number of input "files" specified with `-i` (regular files, pipes, network streams, capture devices, etc.) and writes to any number of output URLs. The processing pipeline looks like this:
+
+```
+ _______              ______________
+|       |            |              |
+| input |  demuxer   | encoded data |   decoder
+| file  | ---------> | packets      | -----+
+|_______|            |______________|      |
+                                           v
+                                       _________
+                                      |         |
+                                      | decoded |
+                                      | frames  |
+                                      |_________|
+ ________             ______________       |
+|        |           |              |      |
+| output | <-------- | encoded data | <----+
+| file   |   muxer   | packets      |   encoder
+|________|           |______________|
+```
+
+## 2 Installing ffmpeg
+
+On macOS, install via [Homebrew](https://brew.sh/):
+
+```
+brew install ffmpeg
+```
+
+To verify the installation:
+
+```
+brew info ffmpeg
+```
+
+## 3 Extracting Frames as Images
+
+Start with the basic command:
+
+```
+ffmpeg -i foo.avi -r 1 -s WxH -f image2 foo-%03d.jpg
+```
+
+This extracts one frame per second from `foo.avi`, resizes to `WxH`, and saves them as `foo-001.jpg`, `foo-002.jpg`, etc.
+
+Common flags used here:
+* `-i` — input file
+* `-f` — output format
+* `-r` — frame rate (frames to extract per second)
+* `-s` — output image size
+
+For extracting a specific number of frames starting at a specific timestamp, use these additional flags:
+* `-frames:v` — number of frames to extract
+* `-t` — duration in seconds
+* `-ss` — start timestamp; **must come before `-i`**, otherwise you get empty output (learned this the hard way)
+
+A real example from my work:
+
+```
+ffmpeg -ss 1:20:00 -i 1.mp4 -r 1/30 -frames:v 100 -f image2 image_%05d.jpg
+```
+
+This starts at 1:20:00 in `1.mp4`, extracts one frame every 30 seconds, captures 100 frames total, and names them `image_00001.jpg`, `image_00002.jpg`, etc.
+
+## 4 Clipping Video Segments
+
+Similar to frame extraction, but the output is a video file:
+
+```
+ffmpeg -ss 1:01:13 -t 20 -i 2.mp4 temp.mp4
+```
+
+Flags:
+* `-ss` — start time of the clip
+* `-t` — duration of the clip in seconds
+* `-codec copy` (optional) — copies all streams from the source without re-encoding. Without this, ffmpeg re-encodes everything using its default codecs.
+
+## Afterword
+
+For more on ffmpeg, the [official documentation](https://ffmpeg.org/ffmpeg.html) is the best reference — most of this post is based on it.
+
+</div>

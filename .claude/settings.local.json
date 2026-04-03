@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -l \"hide\" /Users/piddnad/piddnad.github.io/_posts/*.md)",
+      "Bash(grep -l \"published: false\" *.md)",
+      "Bash(ruby --version)",
+      "Bash(gem --version)",
+      "Bash(jekyll --version)",
+      "Bash(conda env:*)",
+      "Bash(bundle check:*)",
+      "Bash(bundle install:*)",
+      "Bash(bundle exec:*)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://127.0.0.1:4000)"
+    ]
+  }
+}

@@ -195,6 +195,17 @@
     } else if (path === '/search' || path === '/search/index.html') {
       document.title = I18N[lang].page_title_search + suffix;
     }
+
+    // For post pages with a translated title
+    var enTitleMeta = document.querySelector('meta[name="page-title-en"]');
+    if (enTitleMeta) {
+      if (lang === 'en') {
+        document.title = enTitleMeta.getAttribute('content');
+      } else {
+        var zhTitleMeta = document.querySelector('meta[name="page-title-zh"]');
+        if (zhTitleMeta) document.title = zhTitleMeta.getAttribute('content');
+      }
+    }
   }
 
   function applyLang(lang) {
@@ -211,6 +222,7 @@
     applyDataI18n(lang);
     applyLangBlocks(lang);
     applyPageTitle(lang);
+    if (window.rebuildTOC) window.rebuildTOC();
 
     var searchInputs = document.querySelectorAll('.search-form-input[data-i18n-placeholder="search_placeholder"]');
     for (var i = 0; i < searchInputs.length; i++) {

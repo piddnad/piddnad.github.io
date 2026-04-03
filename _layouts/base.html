@@ -9,6 +9,8 @@
   <meta content="telephone=no" name="format-detection">
 
   <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %} | {{ site.subtitle}}</title>
+  <meta name="page-title-zh" content="{% if page.title %}{{ page.title }} | {{ site.subtitle }}{% else %}{{ site.title }} | {{ site.subtitle }}{% endif %}">
+  {% if page.title_en %}<meta name="page-title-en" content="{{ page.title_en }} | {{ site.subtitle }}">{% endif %}
 
   <meta name="keywords"
     content="{% if page.keywords %}{{ page.keywords | split: ' ' | join: ', ' }}{% else %}{{ site.keywords }}{% endif %}">
@@ -58,7 +60,7 @@
   <script>document.documentElement.classList.add("i18n-loading");</script>
 </head>
 
-<body>
+<body{% if page.layout == 'post' %} class="post-page"{% endif %}>
   <div style="display:none;">
     {% if page.image %}
     <img src="{{ site.url }}{{ page.image }}" alt="weixin-share-img">
@@ -111,6 +113,7 @@
       </div>
 
       <div class="pure-u-1-4">
+        {% unless page.layout == 'post' %}
         <div id="sidebar">
           <div class="widget">
             {% if site.baidu_search %}
@@ -183,18 +186,6 @@
           </div>
 
 
-          {% if site.related_posts %}
-          <div class="widget">
-            <div class="widget-title" data-i18n="related_title">相关推荐</div>
-            <ul class="post-list">
-              {% for post in site.related_posts %}
-              <li class="post-list-item"><a class="post-list-link" href="{{ post.url | prepend: site.baseurl }}">{% if
-                  post.title %} {{ post.title }} {% else %} {{ site.page_no_title }} {% endif %}</a></li>
-              {% endfor %}
-            </ul>
-          </div>
-          {% endif %}
-
 
           <div class="widget post-toc hide">
             <div class="widget-title" data-i18n="toc_title">文章目录</div>
@@ -264,11 +255,20 @@
               };
 
               var hs = content.querySelectorAll('{{ page.toc_selectors | default: "h1, h2, h3, h4, h5, h6" }}');
+              // Filter out headings inside hidden lang blocks
+              var visibleHs = Array.prototype.filter.call(hs, function(h) {
+                var el = h.parentNode;
+                while (el && el !== content) {
+                  if (el.style && el.style.display === 'none') return false;
+                  el = el.parentNode;
+                }
+                return true;
+              });
               var cul = null, plevel = 1;
               var uls = [make('ul')];
-              for (var i = 0; i < hs.length; i++) {
-                var level = +hs[i].tagName.substr(1);
-                var hi = hs[i];
+              for (var i = 0; i < visibleHs.length; i++) {
+                var level = +visibleHs[i].tagName.substr(1);
+                var hi = visibleHs[i];
                 var ti = make('li');
                 ti.appendChild(generateLink(hi));
                 if (plevel < level) {
@@ -330,14 +330,115 @@
               window.addEventListener('resize', s1, false);
             }
 
-            TOCize(
-              document.querySelector('.post-toc'),
-              document.querySelector('.post-content'),
-              document.querySelector('.post')
-            );
+            window.rebuildTOC = function() {
+              var tocEl = document.querySelector('.post-toc');
+              if (!tocEl) return;
+              // Clear everything except .widget-title
+              var children = Array.prototype.slice.call(tocEl.children);
+              for (var i = 0; i < children.length; i++) {
+                if (!children[i].classList.contains('widget-title')) {
+                  tocEl.removeChild(children[i]);
+                }
+              }
+              tocEl.style.display = 'none';
+              TOCize(tocEl, document.querySelector('.post-content'), document.querySelector('.post'));
+            };
+
+            window.rebuildTOC();
           </script>
 
         </div>
+        {% endunless %}
+        {% if page.layout == 'post' %}
+        <div id="floating-toc">
+          <div class="floating-toc-title" data-i18n="toc_title">目录</div>
+          <nav id="floating-toc-nav"></nav>
+        </div>
+        <script type="text/javascript">
+          window.buildFloatingTOC = function() {
+            var nav = document.getElementById('floating-toc-nav');
+            var toc = document.getElementById('floating-toc');
+            if (!nav || !toc) return;
+
+            // Clear on rebuild (e.g. language switch)
+            nav.innerHTML = '';
+            toc.style.display = 'none';
+            if (toc._scrollHandler) {
+              window.removeEventListener('scroll', toc._scrollHandler, false);
+              toc._scrollHandler = null;
+            }
+
+            var content = document.querySelector('.post-content');
+            if (!content) return;
+
+            var hs = content.querySelectorAll('{{ page.toc_selectors | default: "h2, h3, h4" }}');
+            var visibleHs = Array.prototype.filter.call(hs, function(h) {
+              var el = h.parentNode;
+              while (el && el !== content) {
+                if (el.style && el.style.display === 'none') return false;
+                el = el.parentNode;
+              }
+              return true;
+            });
+
+            if (!visibleHs.length) return;
+
+            var headings = [];
+            var cnt = 0;
+            var ul = document.createElement('ul');
+
+            Array.prototype.forEach.call(visibleHs, function(h) {
+              cnt++;
+              var hash = h.getAttribute('id');
+              if (!hash) {
+                hash = 'ftoc-' + cnt;
+                h.setAttribute('id', hash);
+              }
+              var li = document.createElement('li');
+              var a = document.createElement('a');
+              a.textContent = h.textContent;
+              a.href = '#' + hash;
+              (function(hEl, hHash) {
+                a.addEventListener('click', function(e) {
+                  e.preventDefault();
+                  var y = hEl.getBoundingClientRect().top + (window.scrollY || window.pageYOffset || document.documentElement.scrollTop);
+                  window.scrollTo(0, y);
+                  if (window.history.pushState) window.history.pushState({}, hEl.textContent, '#' + hHash);
+                }, false);
+              })(h, hash);
+              li.appendChild(a);
+              ul.appendChild(li);
+              headings.push({ el: h, a: a });
+            });
+
+            nav.appendChild(ul);
+            toc.style.display = 'block';
+
+            function updateActive() {
+              var scrollY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
+              var current = -1;
+              for (var i = 0; i < headings.length; i++) {
+                var top = headings[i].el.getBoundingClientRect().top + scrollY;
+                if (scrollY + 80 >= top) current = i;
+              }
+              for (var j = 0; j < headings.length; j++) {
+                if (j === current) {
+                  headings[j].a.classList.add('toc-active');
+                } else {
+                  headings[j].a.classList.remove('toc-active');
+                }
+              }
+            }
+
+            toc._scrollHandler = updateActive;
+            window.addEventListener('scroll', updateActive, false);
+            updateActive();
+          };
+
+          window.rebuildTOC = window.buildFloatingTOC;
+          window.rebuildTOC();
+        </script>
+        {% endif %}
       </div>
     </div>
 
