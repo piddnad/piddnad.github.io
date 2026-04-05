@@ -5,9 +5,6 @@ This repository hosts my Jekyll-based personal blog.
 
 The theme is based on the clean, responsive Jekyll template [maupassant-jekyll](https://github.com/alafighting/maupassant-jekyll.git), with additional modifications inspired by [oukohou](https://github.com/oukohou) and the [oukohou blog theme](https://github.com/oukohou/oukohou.github.io). Thanks to the original authors.
 
-Template preview:
-
-![template preview](https://camo.githubusercontent.com/74fd2ccea00a682742515ce1d3725283c3385721/687474703a2f2f6f6f6f2e306f302e6f6f6f2f323031352f31302f32342f353632623562653132313737652e6a7067 "Maupassant template preview")
 
 ## Simplest macOS setup (for this project)
 

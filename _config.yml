@@ -19,6 +19,8 @@ markdown: kramdown
 highlighter: rouge
 kramdown:
   input: GFM
+  # 单引号/撇号用直撇号 (U+0027)，避免与弯引号混用显得突兀；双引号仍用弯引号
+  smart_quotes: [39, 39, "ldquo", "rdquo"]
 
 # Pageinate settings
 paginate: 7 # 分页大小
