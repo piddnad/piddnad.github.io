@@ -233,6 +233,10 @@ a:focus { outline: auto; }
   letter-spacing: .02em;
   display: block;
 }
+.post-meta .sep { margin: 0 .45em; color: var(--text-muted); opacity: .5; }
+.post-meta .post-tag a::before { content: "#"; opacity: .6; }
+.post-meta .post-tag a + a { margin-left: .5em; }
+.post-meta .leancloud-visitors, .post-meta .post-tag a { white-space: nowrap; }
 
 .post .post-content {
   font-size: 16px;
@@ -308,14 +312,17 @@ a:focus { outline: auto; }
 .post .post-content ul a:hover,
 .post .post-content ol a:hover { text-decoration: underline; }
 
+.post .post-content figure { margin: 1.8em 0; }
+.post .post-content figcaption { margin-top: .4em; font-size: 14px; color: var(--text-muted); text-align: center; }
+
 /* Read more */
+.readmore { margin: 0; text-align: right; }
 .readmore a {
   font-family: var(--sans);
   font-size: 14px;
   color: var(--text-muted);
   border-bottom: 1px solid var(--border);
   padding-bottom: 1px;
-  float: right;
 }
 .readmore a:hover { color: var(--accent); border-bottom-color: var(--accent); }
 
@@ -402,21 +409,12 @@ a:focus { outline: auto; }
 /* 12 · Typography: blockquote, pre, code, table */
 blockquote {
   box-sizing: border-box;
-  margin: 2em 0;
-  padding: 0 0 0 50px;
+  margin: 1.6em 0;
+  padding: .2em 0 .2em 1.1em;
+  border-left: 3px solid var(--border);
   color: var(--text-muted);
 }
-blockquote:before {
-  content: "\201C";
-  display: block;
-  font-family: Georgia, serif;
-  font-size: 52px;
-  color: var(--border);
-  font-weight: bold;
-  line-height: 30px;
-  margin-left: -50px;
-  position: absolute;
-}
+.post .post-content blockquote p:last-child { margin-bottom: 0; }
 
 strong, b { font-weight: bold; }
 em { font-style: italic; }

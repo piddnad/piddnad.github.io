@@ -13,31 +13,10 @@ layout: base
         <span data-lang-block="zh">{{ page.date | date: "%Y/%m/%d" }}</span>
         <span data-lang-block="en" style="display:none;">{{ page.date | date: "%b %-d, %Y" }}</span>
       </time>
-      {% if page.categories.size > 0 %} |
-      <span class="post-category">
-        <i class="icon-post-category">
-          {% for page_category in page.categories %}
-          <a href="{{ site.baseurl }}/category/#{{ page_category }}">{% include category_display.html name=page_category %}</a>
-          {% endfor %}
-        </i>
-      </span> {% endif %} {% if page.tags.size > 0 %} |
-      <span class="post-tag">
-        <i class="icon-post-tag">
-          {% for page_tag in page.tags %}
-          <a href="{{ site.baseurl }}/tags/#{{ page_tag }}">{{ page_tag }}</a>
-          {% endfor %}
-        </i>
-      </span>{% endif %}
-
-
+      {% if page.categories.size > 0 %}<span class="sep">·</span><span class="post-category">{% for page_category in page.categories %}<a href="{{ site.baseurl }}/category/#{{ page_category }}">{% include category_display.html name=page_category %}</a>{% endfor %}</span>{% endif %}
+      {% if page.tags.size > 0 %}<span class="sep">·</span><span class="post-tag">{% for page_tag in page.tags %}<a href="{{ site.baseurl }}/tags/#{{ page_tag }}">{{ page_tag }}</a>{% endfor %}</span>{% endif %}
       <!-- 阅读量统计， id 将作为查询条件 -->
-      <span id={{page.url}} class="leancloud-visitors" data-flag-title={{page.title}}>
-        <span class="post-meta-divider">|</span>
-        <span class="post-meta-item-text" data-i18n="views_label">阅读量 </span>
-        <span class="leancloud-visitors-count"></span>
-      </span>
-
-
+      <span id="{{ page.url }}" class="leancloud-visitors" data-flag-title="{{ page.title }}"><span class="sep">·</span><span class="post-meta-item-text" data-i18n="views_label">阅读量 </span><span class="leancloud-visitors-count"></span></span>
     </p>
   </header>
 

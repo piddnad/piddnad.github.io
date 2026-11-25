@@ -23,8 +23,8 @@ layout: base
 
 
   <div class="post-content">
-    <span data-lang-block="zh">{{ post.content | strip_html | truncate:160 }}</span>
-    <span data-lang-block="en" style="display:none;">{{ post.description_en | default: post.content | strip_html | truncate:160 }}</span>
+    <span data-lang-block="zh">{{ post.description | default: post.content | strip_html | truncate:120 }}</span>
+    <span data-lang-block="en" style="display:none;">{{ post.description_en | default: post.content | strip_html | truncate:200 }}</span>
   </div>
   
   <p class="readmore"><a href="{{ post.url | prepend: site.baseurl }}" data-i18n="read_more">阅读更多</a></p>
