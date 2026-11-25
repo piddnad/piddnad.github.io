@@ -82,7 +82,7 @@ https://comsysto.github.io/Display-Override-PropertyList-File-Parser-and-Generat
 ### Step 4
 这一步由于需要往系统文件夹写入文件，所以必须先禁用系统完整性保护（System Integrity Protection），步骤如下：
 1. 重启 Mac，启动时按住 Command + R，进入 Recovery 模式。
-2. 当出现 *MacOS Utilities"/"OS X Utilities* 屏幕时，按下屏幕顶部的 *Utilities* 菜单，然后选择 *Terminal*。
+2. 当出现 “*MacOS Utilities*”/“*OS X Utilities*” 屏幕时，按下屏幕顶部的 *Utilities* 菜单，然后选择 *Terminal*。
 3. 输入命令 `$ csrutil disable; reboot` 。
 
 Mac 自动重启后，在 Terminal 输入如下命令，将 plist 文件拷贝至系统目录。

@@ -11,7 +11,7 @@ timezone: Asia/Shanghai # GitHub Pages builds in UTC; posts dated 00:00–08:00 
 
 # Build settings
 permalink: /:year/:month/:day/:title/
-exclude: ["README.md", "changelog.md", "vendor"]
+exclude: ["README.md", "changelog.md", "vendor", "scripts"]
 # gems: [jekyll-paginate]
 plugins:
   - jekyll-paginate

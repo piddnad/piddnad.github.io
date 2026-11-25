@@ -31,15 +31,15 @@ tags: [Tutorial, Blog, Linux]
 
 本教程以阿里云为例：
 
-首先登录阿里云，进入"控制台"，进入菜单"域名"-"域名列表"。
+首先登录阿里云，进入“控制台”，进入菜单“域名”-“域名列表”。
 
 ![](https://ws3.sinaimg.cn/large/006tKfTcly1g0vt3z6xy1j31te0gyjwc.jpg)
 
-这里列出了你持有的全部域名，找到你想要解析的域名，在右边的"操作"中选择"解析"。
+这里列出了你持有的全部域名，找到你想要解析的域名，在右边的“操作”中选择“解析”。
 
 ![](https://ws2.sinaimg.cn/large/006tKfTcly1g0vt44r4p9j31ti0k8wkf.jpg)
 
-进入解析设置界面，按照上图添加两条记录，"记录值"字段填写你的 VPS 的 IP 地址。
+进入解析设置界面，按照上图添加两条记录，“记录值”字段填写你的 VPS 的 IP 地址。
 
 这样，域名解析就配置完成了。你可以使用自己的电脑 ping 一下刚才解析的域名，若正确无误，应该可以 ping 通。
 
@@ -62,7 +62,7 @@ tags: [Tutorial, Blog, Linux]
     * 指定端口连接 ``ssh -p 端口号 root@ip``
 * 对于 Windows 用户，需要使用别的方式，我推荐一个 Chrome App：[Secure Shell](http://link.zhihu.com/?target=https%3A//chrome.google.com/webstore/detail/secure-shell/pnhechapfaindjhompbnflcldabbghjo%3Futm_source%3Dchrome-app-launcher-info-dialog)，当然，你也可以安装别的 ssh 工具例如 [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/) 等。
 
-成功登录后，创建一个名为 "lnmp" 的 screen 会话：
+成功登录后，创建一个名为 “lnmp” 的 screen 会话：
 
 ```
 screen -S lnmp
@@ -189,7 +189,7 @@ chown -R www /home/wwwroot
 
 ![](https://ws3.sinaimg.cn/large/006tKfTcly1g0vt5r95stj316x0u0q8b.jpg)
 
-然后将进行"著名的WordPress五分钟安装程序"，最后，大功告成！
+然后将进行“著名的WordPress五分钟安装程序”，最后，大功告成！
 
 ## 6 其他优化
 ### 6.1 添加IP访问

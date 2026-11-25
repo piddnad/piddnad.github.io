@@ -60,6 +60,17 @@ pkill -f "jekyll serve --host 127.0.0.1 --port 4001"
 
 Expected response includes: `HTTP/1.1 200 OK`.
 
+## Writing posts: Chinese quotation marks
+
+kramdown's smart quotes pick the wrong direction next to Chinese text
+(`写到："xx"` renders as `写到：”xx”`). In Chinese paragraphs, type “ ” (or 「 」)
+directly, or run the converter before committing:
+
+```bash
+python3 scripts/fix_quotes.py _posts/*.md          # dry run
+python3 scripts/fix_quotes.py --write _posts/*.md  # rewrite in place
+```
+
 ## Notes
 
 - This repository tracks both `Gemfile` and `Gemfile.lock` for reproducible dependency resolution.
