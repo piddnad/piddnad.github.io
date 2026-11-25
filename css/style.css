@@ -16,9 +16,10 @@ html.i18n-loading body { visibility: hidden; }
   --accent-h:   #2a55a8;
   --border:     #ddd9d0;
   --widget-title-size: 14px;
-  --page-title-font: Palatino, "Palatino Linotype", "Book Antiqua", serif;
-  --h2-size: 20px;
-  --h3-size: 17px;
+  --page-title-font: var(--sans);
+  --h2-size: 22px;
+  --h3-size: 18px;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   --serif: Georgia, "Source Han Serif SC", STSong, serif;
   --sans:  -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui,
            "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Microsoft YaHei", sans-serif;
@@ -34,9 +35,13 @@ body {
   font-size: 15px;
 }
 
+/* Pure grid sets font-family: sans-serif on every .pure-u-*, which
+   silently replaced --sans for all post text. Restore it. */
+.pure-g [class*="pure-u"] { font-family: var(--sans); }
+
 .body_container {
   padding: 0 60px;
-  max-width: 1150px;
+  max-width: 960px; /* content-box: main column ≈ 670px ≈ 42 CJK chars per line */
   margin: 0 auto;
 }
 
@@ -75,7 +80,7 @@ a:focus { outline: auto; }
 }
 
 #header .site-name #logo {
-  font: bold 38px/1.12 var(--serif);
+  font: bold 30px/1.15 var(--serif);
   color: var(--text);
   letter-spacing: -.5px;
 }
@@ -206,10 +211,12 @@ a:focus { outline: auto; }
 .post .post-title,
 .label-title {
   font-family: var(--page-title-font);
-  font-size: 24px;
-  font-weight: bold;
-  line-height: 1.3;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: .01em;
 }
+.post-page .post .post-title { font-size: 30px; line-height: 1.35; }
 .post .post-title {
   margin: 0;
   color: var(--text);
@@ -239,11 +246,11 @@ a:focus { outline: auto; }
 }
 /* shared heading sizes across post content and archive/tags pages */
 .post .post-content h2,
-.post-archive h2 { font-size: var(--h2-size); margin: 1.4em 0 .8em; }
+.post-archive h2 { font-size: var(--h2-size); margin: 1.8em 0 .8em; }
 .post .post-content h3,
 .post-archive h3 { font-size: var(--h3-size); margin: 1.2em 0 .6em; }
 .post .post-content h4 { font-size: 16px; margin: 1.2em 0 .6em; }
-.post .post-content h2 { border-bottom: 1px solid var(--border); }
+.post .post-content h2 { border-bottom: 1px solid var(--border); padding-bottom: .3em; line-height: 1.4; }
 .post .post-content p  { margin: 0 0 1.2em; }
 
 .post .post-content p code {
@@ -904,6 +911,7 @@ i {
 /* 19 · Responsive */
 @media print, screen and (max-width: 48em) {
   .body_container    { padding: 0 30px; }
+  .post-page .post .post-title { font-size: 26px; }
   .content_container { padding-right: 15px; }
   #sidebar           { display: none; }
 
