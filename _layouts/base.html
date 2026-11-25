@@ -75,18 +75,18 @@
         <a id="logo" href="/.">{{ site.title }}</a>
         <p class="description">{{ site.subtitle }}</p>
       </div>
-      <div id="nav-menu">
-        {% for menu in site.menu %}
-        <a href="{{ site.baseurl }}/{{ menu.directory }}"><i class="{{ menu.icon }}"> {{ menu.page }}</i></a>
-        {% endfor %}
+      <div class="header-nav">
+        <div id="nav-menu">
+          {% for menu in site.menu %}
+          <a href="{{ site.baseurl }}/{{ menu.directory }}"><i class="{{ menu.icon }}"> {{ menu.page }}</i></a>
+          {% endfor %}
+        </div>
+        <div class="lang-switch" role="group" aria-label="Language / 语言">
+          <button type="button" class="lang-opt" data-set-lang="zh" lang="zh-CN" aria-pressed="true">中</button>
+          <span class="lang-sep" aria-hidden="true">/</span>
+          <button type="button" class="lang-opt" data-set-lang="en" lang="en" aria-pressed="false">EN</button>
+        </div>
       </div>
-      <button id="lang-switch-btn" class="lang-switch" type="button" aria-label="Switch language">
-        <span class="lang-switch-track" aria-hidden="true">
-          <span class="lang-switch-thumb"></span>
-        </span>
-        <span class="lang-switch-label lang-switch-label-zh">中</span>
-        <span class="lang-switch-label lang-switch-label-en">EN</span>
-      </button>
       <script type="text/javascript">
         var menus = document.getElementById('nav-menu');
         var ishome = true;

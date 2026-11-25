@@ -212,10 +212,9 @@
     document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
     document.body.setAttribute('data-lang', lang);
 
-    var switchBtn = document.getElementById('lang-switch-btn');
-    if (switchBtn) {
-      switchBtn.setAttribute('aria-label', lang === 'zh' ? 'Switch to English' : '切换到中文');
-      switchBtn.setAttribute('data-lang-current', lang);
+    var opts = document.querySelectorAll('[data-set-lang]');
+    for (var k = 0; k < opts.length; k++) {
+      opts[k].setAttribute('aria-pressed', opts[k].getAttribute('data-set-lang') === lang ? 'true' : 'false');
     }
 
     applyNav(lang);
@@ -229,13 +228,6 @@
       searchInputs[i].setAttribute('placeholder', I18N[lang].search_placeholder);
     }
 
-    // Enable thumb animation only after initial language state is applied.
-    if (!document.body.classList.contains('lang-ready')) {
-      setTimeout(function () {
-        document.body.classList.add('lang-ready');
-      }, 0);
-    }
-
     document.documentElement.classList.remove('i18n-loading');
   }
 
@@ -246,10 +238,19 @@
     applyLang(next);
   }
 
+  function setLang(lang) {
+    if (!SUPPORTED[lang] || lang === document.body.getAttribute('data-lang')) return;
+    setStoredLang(lang, true);
+    applyLang(lang);
+  }
+
   function initSwitcher() {
-    var btn = document.getElementById('lang-switch-btn');
-    if (!btn) return;
-    btn.addEventListener('click', toggleLang);
+    var opts = document.querySelectorAll('[data-set-lang]');
+    for (var i = 0; i < opts.length; i++) {
+      opts[i].addEventListener('click', function () {
+        setLang(this.getAttribute('data-set-lang'));
+      });
+    }
   }
 
   function boot() {
@@ -285,6 +286,7 @@
 
   window.SiteI18n = {
     apply: applyLang,
+    set: setLang,
     toggle: toggleLang
   };
 
