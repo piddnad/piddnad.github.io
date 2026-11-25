@@ -952,12 +952,13 @@ i {
   .content_container { padding-right: 0; }
 }
 
-/* 20 · English text: disable character-level breaking */
-body[data-lang="en"] .post .post-content,
-body[data-lang="en"] .post .post-content p,
-body[data-lang="en"] .post .post-content p a,
-body[data-lang="en"] .post .post-content ul a,
-body[data-lang="en"] .post .post-content ol a {
-  word-break: normal;
-  overflow-wrap: break-word;
+/* 20 · English reading layout
+   Justify suits CJK, which can break between any two characters. English
+   breaks only between words, so without hyphenation justify stretches the
+   word gaps unevenly (worst on phones). The CJK-tuned 1.85 line-height is
+   also too airy for Latin text, and 16px gives ~85 chars per line here. */
+body[data-lang="en"] .post .post-content {
+  text-align: left;
+  font-size: 17px;
+  line-height: 1.7;
 }
