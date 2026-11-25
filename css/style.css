@@ -241,8 +241,7 @@ a:focus { outline: auto; }
   padding-top: 16px;
   padding-bottom: .8em;
   text-align: justify;
-  text-justify: distribute;
-  word-break: break-all;
+  overflow-wrap: break-word;
 }
 /* shared heading sizes across post content and archive/tags pages */
 .post .post-content h2,
@@ -265,7 +264,6 @@ a:focus { outline: auto; }
 .post .post-content p a {
   color: var(--accent-h);
   padding-bottom: 1px;
-  word-break: break-all;
 }
 .post .post-content p a:hover { text-decoration: underline; }
 
@@ -306,7 +304,7 @@ a:focus { outline: auto; }
   font-size: .88em;
 }
 .post .post-content ul a,
-.post .post-content ol a { color: var(--accent-h); word-break: break-all; }
+.post .post-content ol a { color: var(--accent-h); }
 .post .post-content ul a:hover,
 .post .post-content ol a:hover { text-decoration: underline; }
 
@@ -428,19 +426,21 @@ pre {
   padding: 10px 14px;
   margin-bottom: 15px;
   line-height: 1.6;
-  word-break: break-all;
-  word-wrap: break-word;
-  white-space: pre-wrap;
+  text-align: left;
+  word-break: normal;
+  white-space: pre;
+  overflow-x: auto;
   background-color: var(--bg-code);
   border: 1px solid var(--border);
   border-radius: 4px;
-  font-size: 14px;
+  font-family: var(--mono);
+  font-size: 13.5px;
 }
 pre code {
   padding: 0;
   margin: 0;
   color: inherit;
-  white-space: pre-wrap;
+  white-space: pre;
   background-color: transparent;
   border: 0;
 }
@@ -448,6 +448,7 @@ pre code {
 code {
   padding: 0 4px;
   margin: 0 2px;
+  font-family: var(--mono);
   font-size: .88em;
   background-color: var(--bg-code);
   border: 1px solid var(--border);
