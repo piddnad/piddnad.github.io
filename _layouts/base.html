@@ -179,10 +179,11 @@
 
           <div class="widget">
             <div class="widget-title" data-i18n="links_title">友情链接</div>
-            {% for link in site.links %}
-            <a href="{{ site.baseurl }}/{{ menu.directory }}"><i class="{{ menu.icon }}"> {{ menu.page }}</i></a>
-            <ul></ul><a href="{{ link.url }}" title="{{ link.title }}" target="_blank">{{ link.title }}</a>
-            {% endfor %}
+            <ul>
+              {% for link in site.links %}
+              <li><a href="{{ link.url }}" title="{{ link.title }}" target="_blank" rel="noopener">{{ link.title }}</a></li>
+              {% endfor %}
+            </ul>
           </div>
 
 
@@ -452,7 +453,7 @@
     </div>
 
 
-    <a id="rocket" href="#top" class="show"></a>
+    <a id="rocket" href="#top"></a>
 
     <script src="/js/jquery.min.js" type="text/javascript"></script>
     <script src="/js/totop.js" type="text/javascript"></script>

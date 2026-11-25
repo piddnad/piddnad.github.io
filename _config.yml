@@ -7,6 +7,7 @@ url: "https://piddnad.me" # 你的域名
 page_no_title: "Piddnad's Blog" # 文章无标题时默认显示内容
 beian: # "备案号"
 email: piddnad@gmail.com
+timezone: Asia/Shanghai # GitHub Pages builds in UTC; posts dated 00:00–08:00 +0800 would otherwise show the previous day
 
 # Build settings
 permalink: /:year/:month/:day/:title/
